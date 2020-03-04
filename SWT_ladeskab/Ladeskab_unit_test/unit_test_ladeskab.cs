@@ -14,11 +14,7 @@ namespace Ladeskab_unit_test
         [TestFixture]
         class Sub_tester
         {
-            // private IHeater _heater;
-            // private ISensor _sensor;
-            // private IWindow _window;
-            // private RefactoredECS.ECS _uut;
-
+            
             private IStationControl _stationControl;
             private IRFIDReader _rfidReader;
             private IChargeControl _chargeControl;
@@ -39,9 +35,7 @@ namespace Ladeskab_unit_test
             [Test]
             public void Skabelon_test()
             {
-                //_sensor.GetTemp().Returns(_uut.LowerTemperatureThreshold - 20);
-                //_uut.Regulate();
-                //_heater.Received(1).TurnOn();
+                
             }
         }
     }
