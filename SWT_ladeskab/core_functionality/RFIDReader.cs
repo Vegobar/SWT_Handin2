@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace SWT_ladeskab
 {
-    class RFIDReader
+    class RFIDReader: IRFIDReader
     {
+
+        public event EventHandler<RfidDetectedEventArgs> RfidDetected_Event;
     }
 }

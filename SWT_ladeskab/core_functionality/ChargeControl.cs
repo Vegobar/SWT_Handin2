@@ -6,7 +6,25 @@ using System.Threading.Tasks;
 
 namespace SWT_ladeskab
 {
-    class ChargeControl
+
+    class ChargeControl : IChargeControl
     {
+        private bool connected { get; set; }
+        public int updateDisplayPower()
+        {
+            int power = 0;
+            return power;
+        }
+
+        public bool isConnected()
+        {
+
+            return connected;
+        }
+
+        public void startCharge()
+        {
+
+        }
     }
 }
