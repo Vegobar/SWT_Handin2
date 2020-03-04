@@ -8,6 +8,19 @@ namespace SWT_ladeskab
 {
     class StationControl : IStationControl
     {
+        private enum LadeSkabsState
+        {
+            Available,
+            Locked,
+            DoorOpen
+        };
+
+        private LadeSkabsState _state;
+        private IChargeControl _chargeControl;
+        private IDoor _door;
+
+        private int _oldId;
+
         public void LogDoorLocked(int id)
         {
             throw new NotImplementedException();
