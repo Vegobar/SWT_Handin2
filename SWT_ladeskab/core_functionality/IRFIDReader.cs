@@ -13,6 +13,6 @@ namespace SWT_ladeskab
 
     public class RfidDetectedEventArgs : EventArgs
     {
-
+        public int id { get; set; }
     }
 }
