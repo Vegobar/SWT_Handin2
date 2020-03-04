@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace SWT_ladeskab
 {
-    interface IChargeControl
+    public interface IChargeControl
     {
         int updateDisplayPower();
         bool isConnected();
