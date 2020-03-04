@@ -6,7 +6,19 @@ using System.Threading.Tasks;
 
 namespace SWT_ladeskab
 {
-    class Door
+    class Door : IDoor
     {
+        public void unlockDoor()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void lockDoor()
+        {
+            throw new NotImplementedException();
+        }
+
+        public event EventHandler<OpenDoorEventArgs> OpenDoorEvent;
+        public event EventHandler<ClosedDoorEventArgs> ClosedDoorEvent;
     }
 }
