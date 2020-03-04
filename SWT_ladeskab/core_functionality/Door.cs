@@ -20,5 +20,15 @@ namespace SWT_ladeskab
 
         public event EventHandler<OpenDoorEventArgs> OpenDoorEvent;
         public event EventHandler<ClosedDoorEventArgs> ClosedDoorEvent;
+
+        protected virtual void OnDoorOpenEvent(OpenDoorEventArgs e)
+        {
+            OpenDoorEvent?.Invoke(this, e);
+        }
+
+        protected virtual void OnClosedDoorEvent(ClosedDoorEventArgs e)
+        {
+            ClosedDoorEvent?.Invoke(this, e);
+        }
     }
 }
