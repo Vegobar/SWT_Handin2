@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace SWT_ladeskab
 {
-    interface IDisplay
+    public interface IDisplay
     {
+         void display(string name);
     }
 }
