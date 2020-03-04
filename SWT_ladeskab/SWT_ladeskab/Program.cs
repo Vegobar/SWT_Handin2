@@ -6,6 +6,8 @@ class Program
     {
         // Assemble your system here from all the classes
 
+        //Make objects, so that we can call door methods and rfidreader.
+
         bool finish = false;
         do
         {
