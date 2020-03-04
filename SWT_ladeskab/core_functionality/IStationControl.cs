@@ -6,7 +6,11 @@ using System.Threading.Tasks;
 
 namespace SWT_ladeskab
 {
-    interface IStationControl
-    {
+    public interface IStationControl
+    { 
+        void LogDoorLocked(int id);
+        bool CheckId(int OldID, int id);
+        void RfidDetected_handler(int id);
+
     }
 }
