@@ -8,7 +8,13 @@ namespace SWT_ladeskab
 {
     class RFIDReader: IRFIDReader
     {
+        private IRFIDReader _irfidReaderImplementation;
 
-        public event EventHandler<RfidDetectedEventArgs> RfidDetected_Event;
+        public event EventHandler<RfidDetectedEventArgs> RfidDetectedEvent;
+
+        protected virtual void onRfidDetectedEvent(RfidDetectedEventArgs e)
+        {
+            RfidDetectedEvent?.Invoke(this,e);
+        }
     }
 }

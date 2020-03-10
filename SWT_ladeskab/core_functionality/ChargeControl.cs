@@ -10,15 +10,14 @@ namespace SWT_ladeskab
     class ChargeControl : IChargeControl
     {
         private bool connected { get; set; }
+        private int CurrentCharge { get; set; }
         public int updateDisplayPower()
         {
-            int power = 0;
-            return power;
+            return CurrentCharge;
         }
 
         public bool isConnected()
         {
-
             return connected;
         }
 
