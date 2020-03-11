@@ -32,11 +32,6 @@ namespace Ladeskab_unit_test
                 _display = Substitute.For<IDisplay>();
             }
 
-            [Test]
-            public void Skabelon_test()
-            {
-                
-            }
 
             [Test]
             public void testingOpenDoor()
@@ -46,6 +41,22 @@ namespace Ladeskab_unit_test
                 _door.OpenDoorEvent += Raise.EventWith(new OpenDoorEventArgs());
 
                 Assert.True(wasCalled);
+            }
+
+            [Test]
+            public void testingCloseDoor()
+            {
+                var wasCalledClose = false;
+                _door.ClosedDoorEvent += (sender, args) => wasCalledClose = true;
+                _door.ClosedDoorEvent += Raise.EventWith(new ClosedDoorEventArgs());
+
+                Assert.True(wasCalledClose);
+            }
+
+            [Test]
+            public void testingEventDoorSubscription()
+            {
+                
             }
         }
     }
