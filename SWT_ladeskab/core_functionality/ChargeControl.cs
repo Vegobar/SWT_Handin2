@@ -11,13 +11,41 @@ namespace SWT_ladeskab
 {
 
     class ChargeControl : IChargeControl
-    {
-        UsbChargerSimulator Usb = new UsbChargerSimulator();
+    { 
+        IUsbCharger Usb = new UsbChargerSimulator();
+        IDisplay chargeDisplay = new Display();
+
         private bool connected { get; set; }
         static private double CurrentCharge { get; set; }
-        public double updateDisplayPower()
+
+        ChargeControl()
         {
-            return CurrentCharge;
+            Usb.CurrentValueEvent += ChargeChangedevent;
+        }
+        public string updateDisplayPower(double charge)
+        {
+            string chargeState = "";
+            if (charge == 0)
+            {
+                chargeState = "Something went wrong, phone not connected, or not charging.";
+                Usb.StopCharge();
+            }
+            else if (charge > 0 && charge <= 5)
+            {
+                chargeState = "Phone fully charged.";
+                Usb.StopCharge();
+            }
+            else if (charge > 5 && charge <= 500)
+            {
+                chargeState = "Phone charging.";
+            }
+            else if (charge > 500)
+            {
+                chargeState = "Warning: short circuit, disabling charge mode";
+                Usb.StopCharge();
+            }
+
+            return chargeState;
         }
 
         public bool isConnected()
@@ -37,7 +65,7 @@ namespace SWT_ladeskab
             }
         }
         //Gets charge value from UsbCharger
-        static void ChargeChanged(object sender, CurrentEventArgs e)
+        static void ChargeChangedevent(object sender, CurrentEventArgs e)
         {
             CurrentCharge = e.Current;
         }

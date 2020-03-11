@@ -10,7 +10,7 @@ namespace SWT_ladeskab
 {
     public interface IChargeControl
     {
-        double updateDisplayPower();
+        string updateDisplayPower(double value);
         bool isConnected();
         void startCharge();
 

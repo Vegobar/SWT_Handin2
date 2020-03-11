@@ -14,7 +14,8 @@ namespace SWT_ladeskab
 
         protected virtual void onRfidDetectedEvent(RfidDetectedEventArgs e)
         {
-            RfidDetectedEvent?.Invoke(this,e);
+            int detectedId = int.Parse(Console.ReadLine());
+            RfidDetectedEvent?.Invoke(this,new RfidDetectedEventArgs(){id = detectedId});
         }
     }
 }

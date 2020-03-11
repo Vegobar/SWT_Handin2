@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Castle.Core.Smtp;
 using NSubstitute;
 using NUnit.Framework;
 using SWT_ladeskab;
+using UsbSimulator;
 
 namespace Ladeskab_unit_test
 {
@@ -20,6 +22,7 @@ namespace Ladeskab_unit_test
             private IChargeControl _chargeControl;
             private IDoor _door;
             private IDisplay _display;
+            private IUsbCharger _usbCharger;
 
 
             [SetUp]
@@ -30,6 +33,8 @@ namespace Ladeskab_unit_test
                 _chargeControl = Substitute.For<IChargeControl>();
                 _door = Substitute.For<IDoor>();
                 _display = Substitute.For<IDisplay>();
+                _usbCharger = Substitute.For<IUsbCharger>();
+
             }
 
             [Test]
@@ -47,6 +52,7 @@ namespace Ladeskab_unit_test
 
                 Assert.True(wasCalled);
             }
+
         }
     }
 }
