@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using SWT_ladeskab;
 using UsbSimulator;
 
 namespace SWT_ladeskab
@@ -18,16 +19,19 @@ namespace SWT_ladeskab
         private bool connected { get; set; }
         static private double CurrentCharge { get; set; }
 
+        public event EventHandler<ChargeDisplayEventArgs> ChargeDisplayEvent;
+
         ChargeControl()
         {
             Usb.CurrentValueEvent += ChargeChangedevent;
         }
-        public string updateDisplayPower(double charge)
+
+        public void updateDisplayPower(double charge)
         {
             string chargeState = "";
             if (charge == 0)
             {
-                chargeState = "Something went wrong, phone not connected, or not charging.";
+                chargeState = "";
                 Usb.StopCharge();
             }
             else if (charge > 0 && charge <= 5)
@@ -45,7 +49,7 @@ namespace SWT_ladeskab
                 Usb.StopCharge();
             }
 
-            return chargeState;
+            onChargeDisplayEvent(chargeState);
         }
 
         public bool isConnected()
@@ -65,9 +69,18 @@ namespace SWT_ladeskab
             }
         }
         //Gets charge value from UsbCharger
-        static void ChargeChangedevent(object sender, CurrentEventArgs e)
+        private void ChargeChangedevent(object sender, CurrentEventArgs e)
         {
             CurrentCharge = e.Current;
+            updateDisplayPower(CurrentCharge);
+        }
+
+        private void onChargeDisplayEvent(string message)
+        {
+            ChargeDisplayEvent?.Invoke(this, new ChargeDisplayEventArgs(){msg = message});
         }
     }
 }
+
+
+

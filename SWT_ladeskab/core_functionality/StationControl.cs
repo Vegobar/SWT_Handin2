@@ -47,7 +47,7 @@ namespace SWT_ladeskab
         {
             throw new NotImplementedException();
         }
-
+        //you wrong! :((((((
         private void OpenDoorEventHandler(object sender, EventArgs e)
         {
             _state = LadeSkabsState.DoorOpen;

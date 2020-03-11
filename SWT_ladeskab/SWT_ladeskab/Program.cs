@@ -18,19 +18,23 @@ class Program
 
             switch (input[0])
             {
-                case 'E':
+                case 'E': 
+                case 'e':
                     finish = true;
                     break;
 
                 case 'O':
+                case 'o':
                     //door.OnDoorOpen();
                     break;
 
                 case 'C':
+                case 'c':
                     //door.OnDoorClose();
                     break;
 
                 case 'R':
+                case 'r':
                     System.Console.WriteLine("Indtast RFID id: ");
                     string idString = System.Console.ReadLine();
 
