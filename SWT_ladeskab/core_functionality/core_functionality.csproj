@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ChargeControl.cs" />
+    <Compile Include="chargeDisplay.cs" />
     <Compile Include="Display.cs" />
     <Compile Include="Door.cs" />
     <Compile Include="IChargeControl.cs" />
@@ -54,6 +55,7 @@
     <Compile Include="RFIDReader.cs" />
     <Compile Include="StationControl.cs" />
     <Compile Include="UsbChargerSimulator.cs" />
+    <Compile Include="UserDisplay.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

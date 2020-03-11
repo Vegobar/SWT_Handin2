@@ -22,6 +22,8 @@ namespace SWT_ladeskab
         private IDisplay _display;
         private IRFIDReader _rfid;
 
+        public string currentDisplay { get; set; }
+
         private int _oldId;
 
         public StationControl(IDoor door, IDisplay display, IRFIDReader rfid)
@@ -34,6 +36,7 @@ namespace SWT_ladeskab
             _door.OpenDoorEvent += OpenDoorEventHandler;
             _door.ClosedDoorEvent += CloseDoorEventHandler;
             _rfid.RfidDetectedEvent += RfidDetectedEventHandler;
+            _chargeControl.ChargeDisplayEvent += ChargeDisplayEventHandler;
 
         }
 
@@ -55,20 +58,26 @@ namespace SWT_ladeskab
         private void OpenDoorEventHandler(object sender, EventArgs e)
         {
             _state = LadeSkabsState.DoorOpen;
-            _display.display("Tilslut telefon");
-            _door.unlockDoor();
+            _display.display("Tilslut telefon",currentDisplay);
+           // _door.unlockDoor();
         }
 
         private void CloseDoorEventHandler(object sender, EventArgs e)
         {
             _state = LadeSkabsState.Locked;
-            _display.display("Indlæs RFID");
+            //_display.display("Indlæs RFID");
             _door.lockDoor();
         }
 
         private void RfidDetectedEventHandler(object sender, RfidDetectedEventArgs e)
         {
             RfidDetected(e.id);
+        }
+
+        private void ChargeDisplayEventHandler(object sender, ChargeDisplayEventArgs e)
+        {
+            currentDisplay = e.msg;
+            _display.display(fudge, currentDisplay);
         }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using Castle.Core.Smtp;
 using NSubstitute;
 using NUnit.Framework;
@@ -23,6 +24,7 @@ namespace Ladeskab_unit_test
             private IDoor _door;
             private IDisplay _display;
             private IUsbCharger _usbCharger;
+            private OpenDoorEventArgs _receivedDoorArgs;
 
 
             [SetUp]
@@ -39,7 +41,7 @@ namespace Ladeskab_unit_test
 
 
             [Test]
-            public void testingOpenDoor()
+            public void testingOpenDoorInvokation()
             {
                 var wasCalled = false;
                 _door.OpenDoorEvent += (sender, args) => wasCalled = true;
@@ -49,7 +51,7 @@ namespace Ladeskab_unit_test
             }
 
             [Test]
-            public void testingCloseDoor()
+            public void testingCloseDoorInvokation()
             {
                 var wasCalledClose = false;
                 _door.ClosedDoorEvent += (sender, args) => wasCalledClose = true;
@@ -61,7 +63,9 @@ namespace Ladeskab_unit_test
             [Test]
             public void testingEventDoorSubscription()
             {
+                _door.open();
                 
+              
             }
         }
     }

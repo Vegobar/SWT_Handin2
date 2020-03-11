@@ -8,7 +8,7 @@ namespace SWT_ladeskab
 {
     public class Door : IDoor
     {
-        private bool _isLocked;
+        private bool _isLocked = false;
         public void lockDoor()
         {
             _isLocked = true;
@@ -19,8 +19,14 @@ namespace SWT_ladeskab
             _isLocked = false;
         }
 
+        public bool getDoorState()
+        {
+            return _isLocked;
+        }
+
         public void open()
         {
+            if(!_isLocked)
             OnDoorOpenEvent(new OpenDoorEventArgs());
         }
 
