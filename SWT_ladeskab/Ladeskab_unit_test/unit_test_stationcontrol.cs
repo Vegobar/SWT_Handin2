@@ -41,6 +41,13 @@ namespace Ladeskab_unit_test
                 _door.OpenDoorEvent += Raise.EventWith(new OpenDoorEventArgs());
                 _display.Received(1).display("Tilslut telefon");
             }
+
+            [Test]
+            public void testCloseOpenEventHandler()
+            {
+                _door.ClosedDoorEvent += Raise.EventWith(new ClosedDoorEventArgs());
+                _display.Received(1).display("Indlæs RFID");
+            }
         }
     }
 }
