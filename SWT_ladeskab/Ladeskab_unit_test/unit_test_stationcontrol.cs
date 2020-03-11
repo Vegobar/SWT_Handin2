@@ -32,7 +32,7 @@ namespace Ladeskab_unit_test
                 _door = Substitute.For<IDoor>();
                 _display = Substitute.For<IDisplay>();
 
-                _stationControl = new SWT_ladeskab.StationControl(_door, _display);
+                _stationControl = new SWT_ladeskab.StationControl(_door, _display, _rfidReader);
             }
 
             [Test]
