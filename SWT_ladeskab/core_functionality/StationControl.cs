@@ -27,7 +27,10 @@ namespace SWT_ladeskab
         {
             _display = display;
             _door = door;
+
+            //Events
             _door.OpenDoorEvent += OpenDoorEventHandler;
+            _door.ClosedDoorEvent += CloseDoorEventHandler;
         }
 
         public void LogDoorLocked(int id)
@@ -49,6 +52,14 @@ namespace SWT_ladeskab
         {
             _state = LadeSkabsState.DoorOpen;
             _display.display("Tilslut telefon");
+            _door.unlockDoor();
+        }
+
+        private void CloseDoorEventHandler(object sender, EventArgs e)
+        {
+            _state = LadeSkabsState.Locked;
+            _display.display("Indlæs RFID");
+            _door.lockDoor();
         }
     }
 }
