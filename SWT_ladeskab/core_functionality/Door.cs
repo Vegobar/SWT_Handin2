@@ -23,12 +23,12 @@ namespace SWT_ladeskab
 
         protected virtual void OnDoorOpenEvent(OpenDoorEventArgs e)
         {
-            OpenDoorEvent?.Invoke(this, e);
+            OpenDoorEvent?.Invoke(this, null);
         }
 
         protected virtual void OnClosedDoorEvent(ClosedDoorEventArgs e)
         {
-            ClosedDoorEvent?.Invoke(this, e);
+            ClosedDoorEvent?.Invoke(this, null);
         }
     }
 }
