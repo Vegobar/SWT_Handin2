@@ -10,7 +10,6 @@ namespace SWT_ladeskab
     { 
         void LogDoorLocked(int id);
         bool CheckId(int OldID, int id);
-        void RfidDetected_handler(int id);
-
+        void RfidDetected(int id);
     }
 }

@@ -3,26 +3,24 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Castle.Core.Smtp;
 using NSubstitute;
 using NUnit.Framework;
 using SWT_ladeskab;
-using UsbSimulator;
+
 
 namespace Ladeskab_unit_test
 {
-    public class unit_test_ladeskab
+    public class unit_test_stationcontrol
     {
         [TestFixture]
         class Sub_tester
         {
-            
+
             private IStationControl _stationControl;
             private IRFIDReader _rfidReader;
             private IChargeControl _chargeControl;
             private IDoor _door;
             private IDisplay _display;
-            private IUsbCharger _usbCharger;
 
 
             [SetUp]
@@ -33,35 +31,15 @@ namespace Ladeskab_unit_test
                 _chargeControl = Substitute.For<IChargeControl>();
                 _door = Substitute.For<IDoor>();
                 _display = Substitute.For<IDisplay>();
-                _usbCharger = Substitute.For<IUsbCharger>();
 
+                _stationControl = new SWT_ladeskab.StationControl(_door, _display);
             }
 
-
             [Test]
-            public void testingOpenDoor()
+            public void testDoorOpenEventHandler()
             {
-                var wasCalled = false;
-                _door.OpenDoorEvent += (sender, args) => wasCalled = true;
                 _door.OpenDoorEvent += Raise.EventWith(new OpenDoorEventArgs());
-
-                Assert.True(wasCalled);
-            }
-
-            [Test]
-            public void testingCloseDoor()
-            {
-                var wasCalledClose = false;
-                _door.ClosedDoorEvent += (sender, args) => wasCalledClose = true;
-                _door.ClosedDoorEvent += Raise.EventWith(new ClosedDoorEventArgs());
-
-                Assert.True(wasCalledClose);
-            }
-
-            [Test]
-            public void testingEventDoorSubscription()
-            {
-                
+                _display.Received(1).display("Tilslut telefon");
             }
         }
     }

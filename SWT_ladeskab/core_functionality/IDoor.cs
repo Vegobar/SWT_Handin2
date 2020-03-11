@@ -8,8 +8,8 @@ namespace SWT_ladeskab
 {
     public interface IDoor
     {
-        void unlockDoor();
-        void lockDoor();
+        void open();
+        void close();
 
         event EventHandler<OpenDoorEventArgs> OpenDoorEvent;
         event EventHandler<ClosedDoorEventArgs> ClosedDoorEvent;
