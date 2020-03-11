@@ -58,15 +58,15 @@ namespace SWT_ladeskab
         private void OpenDoorEventHandler(object sender, EventArgs e)
         {
             _state = LadeSkabsState.DoorOpen;
-            _display.display("Tilslut telefon",currentDisplay);
+            _display.display("Tilslut telefon",1);
            // _door.unlockDoor();
         }
 
         private void CloseDoorEventHandler(object sender, EventArgs e)
         {
             _state = LadeSkabsState.Locked;
-            //_display.display("Indlæs RFID");
-            _door.lockDoor();
+            _display.display("Indlæs RFID",1);
+            //_door.lockDoor();
         }
 
         private void RfidDetectedEventHandler(object sender, RfidDetectedEventArgs e)
@@ -77,7 +77,7 @@ namespace SWT_ladeskab
         private void ChargeDisplayEventHandler(object sender, ChargeDisplayEventArgs e)
         {
             currentDisplay = e.msg;
-            _display.display(fudge, currentDisplay);
+            _display.display(currentDisplay,2);
         }
     }
 }
