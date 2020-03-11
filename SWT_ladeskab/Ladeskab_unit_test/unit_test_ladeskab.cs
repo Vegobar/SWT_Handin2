@@ -37,6 +37,16 @@ namespace Ladeskab_unit_test
             {
                 
             }
+
+            [Test]
+            public void testingOpenDoor()
+            {
+                var wasCalled = false;
+                _door.OpenDoorEvent += (sender, args) => wasCalled = true;
+                _door.OpenDoorEvent += Raise.EventWith(new OpenDoorEventArgs());
+
+                Assert.True(wasCalled);
+            }
         }
     }
 }

@@ -6,7 +6,11 @@ using System.Threading.Tasks;
 
 namespace SWT_ladeskab
 {
-    class Display
+    public class Display : IDisplay
     {
+        public void display(string text)
+        {
+            Console.WriteLine(text);
+        }
     }
 }
