@@ -68,6 +68,12 @@ namespace SWT_ladeskab
                 Usb.StopCharge();
             }
         }
+
+        public void stopCharge()
+        {
+            throw new NotImplementedException();
+        }
+
         //Gets charge value from UsbCharger
         private void ChargeChangedevent(object sender, CurrentEventArgs e)
         {

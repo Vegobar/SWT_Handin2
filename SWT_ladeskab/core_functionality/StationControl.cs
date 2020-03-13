@@ -61,9 +61,11 @@ namespace SWT_ladeskab
                 case LadeSkabsState.Locked:
                     if (CheckId(_oldId, id_rfid))
                     {
-                        _chargeControl.StopCharge();
+                        _chargeControl.stopCharge();
                         _door.unlockDoor();
                     }
+
+                    _state = LadeSkabsState.Available;
                     break;
 
                 case LadeSkabsState.DoorOpen:
@@ -94,13 +96,13 @@ namespace SWT_ladeskab
         
         private void OpenDoorEventHandler(object sender, EventArgs e)
         {
-            _state = LadeSkabsState.DoorOpen;
+            //_state = LadeSkabsState.DoorOpen;
             _display.display("Tilslut telefon",1);
         }
 
         private void CloseDoorEventHandler(object sender, EventArgs e)
         {
-            _state = LadeSkabsState.Available;
+            //_state = LadeSkabsState.Available;
             _display.display("Indlæs RFID",1);
         }
 
