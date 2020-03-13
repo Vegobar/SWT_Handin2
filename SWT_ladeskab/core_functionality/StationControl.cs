@@ -70,9 +70,16 @@ namespace SWT_ladeskab
                         _door.unlockDoor();
 
                         _log.PrintToFile(": Skab låst op med RFID: ", id_rfid);
+
+                        _display.display("Tag din telefon ud af skabet og luk døren",1);
+                        _state = LadeSkabsState.Available;
+                    }
+                    else
+                    {
+                        _display.display("Forkert RFID tag",1);
                     }
 
-                    _state = LadeSkabsState.Available;
+                   
                     break;
 
                 case LadeSkabsState.DoorOpen:

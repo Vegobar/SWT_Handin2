@@ -1,6 +1,7 @@
 ﻿using System;
 using core_functionality;
 using SWT_ladeskab;
+using UsbSimulator;
 
 class Program
 {
@@ -48,8 +49,7 @@ class Program
 
                     int id = Convert.ToInt32(idString);*/
                     rfidReader.onRfidDetectedEvent();
-                    
-                    break;
+                   break;
 
                 case 'P':
                 case 'p':

@@ -15,7 +15,7 @@ namespace SWT_ladeskab
         public void onRfidDetectedEvent()
         {
             Console.WriteLine("Indtast RFID id: ");
-            int detectedId = int.Parse(Console.ReadLine());
+                int detectedId = int.Parse(Console.ReadLine());
             RfidDetectedEvent?.Invoke(this,new RfidDetectedEventArgs(){id = detectedId});
         }
     }
