@@ -53,6 +53,7 @@ class Program
 
                 case 'P':
                 case 'p':
+                    stationControl.stopcharge();
                     break;
 
                 default:

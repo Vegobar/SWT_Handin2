@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -11,8 +12,8 @@ using UsbSimulator;
 namespace SWT_ladeskab
 {
 
-   public class ChargeControl : IChargeControl
-    { 
+    public class ChargeControl : IChargeControl
+    {
         IUsbCharger Usb = new UsbChargerSimulator();
         IDisplay chargeDisplay = new Display();
 
@@ -21,7 +22,7 @@ namespace SWT_ladeskab
 
         public event EventHandler<ChargeDisplayEventArgs> ChargeDisplayEvent;
 
-       public ChargeControl()
+        public ChargeControl()
         {
             Usb.CurrentValueEvent += ChargeChangedevent;
             connected = true;
@@ -29,6 +30,7 @@ namespace SWT_ladeskab
 
         public void updateDisplayPower(double charge)
         {
+
             string chargeState = "";
             if (charge == 0.0)
             {
@@ -52,6 +54,8 @@ namespace SWT_ladeskab
 
             onChargeDisplayEvent(chargeState);
         }
+    
+
 
         public bool isConnected()
         {

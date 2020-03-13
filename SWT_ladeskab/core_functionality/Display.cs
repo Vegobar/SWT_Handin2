@@ -25,9 +25,13 @@ namespace SWT_ladeskab
                     break;
 
                 case 2:
-                    _chargeString = text1;
-                    _uDisplay.display(_userString);
-                    _cDisplay.display(_chargeString);
+                    if (string.Compare(_chargeString, text1) != 0)
+                    {
+                        _chargeString = text1;
+                        _uDisplay.display(_userString);
+                        _cDisplay.display(_chargeString);
+                    }
+
                     break;
             }
         }

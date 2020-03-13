@@ -120,5 +120,10 @@ namespace SWT_ladeskab
             currentDisplay = e.msg;
             _display.display(currentDisplay,2);
         }
+
+        public void stopcharge()
+        {
+            _chargeControl.stopCharge();
+        }
     }
 }
