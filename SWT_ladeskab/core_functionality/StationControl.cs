@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Resources;
+using System.Runtime.Remoting.Messaging;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -21,6 +24,7 @@ namespace SWT_ladeskab
         private IDoor _door;
         private IDisplay _display;
         private IRFIDReader _rfid;
+        private ILog _log;
 
         public string currentDisplay { get; set; }
 
@@ -63,6 +67,8 @@ namespace SWT_ladeskab
                     {
                         _chargeControl.stopCharge();
                         _door.unlockDoor();
+
+                        _log.PrintToFile(": Skab låst op med RFID: ", id_rfid);
                     }
 
                     _state = LadeSkabsState.Available;
@@ -77,11 +83,8 @@ namespace SWT_ladeskab
                         _door.lockDoor();
                         _chargeControl.startCharge();
                         _oldId = id_rfid;
-                        //Skriv til noget vindue.
-                        //Implementer en Writer klasse:
 
-
-                        //Tilføj noget over denne linje
+                        _log.PrintToFile(": Skab låst med RFID: ", id_rfid);
 
                         _display.display("Skabet er låst og din telefon lades. Brug dit RFID tag til at låse op.",1);
                         _state = LadeSkabsState.Locked;
