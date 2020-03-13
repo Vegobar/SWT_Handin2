@@ -41,17 +41,17 @@ namespace SWT_ladeskab
 
         }
 
-        public void LogDoorLocked(int id)
+        public void LogDoorLocked(int id_rfid)
         {
             throw new NotImplementedException();
         }
 
-        public bool CheckId(int OldID, int id)
+        public bool CheckId(int OldID_rfid, int id_rfid)
         {
             throw new NotImplementedException();
         }
 
-        public void RfidDetected(int id)
+        public void RfidDetected(int id_rfid)
         {
             throw new NotImplementedException();
         }
