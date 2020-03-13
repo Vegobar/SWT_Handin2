@@ -60,7 +60,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="unit_test_ladeskab.cs" />
+    <Compile Include="unit_test_door_display.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="unit_test_stationcontrol.cs" />
   </ItemGroup>
