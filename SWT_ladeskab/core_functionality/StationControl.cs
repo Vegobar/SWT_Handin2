@@ -48,12 +48,48 @@ namespace SWT_ladeskab
 
         public bool CheckId(int OldID_rfid, int id_rfid)
         {
-            throw new NotImplementedException();
+            if (OldID_rfid == id_rfid)
+                return true;
+            else
+                return false;
         }
 
         public void RfidDetected(int id_rfid)
         {
-            throw new NotImplementedException();
+            switch(_state)
+            {
+                case LadeSkabsState.Locked:
+                    if (CheckId(_oldId, id_rfid))
+                    {
+                        _chargeControl.StopCharge();
+                        _door.unlockDoor();
+                    }
+                    break;
+
+                case LadeSkabsState.DoorOpen:
+                    break;
+
+                case LadeSkabsState.Available:
+                    if (_chargeControl.isConnected())
+                    {
+                        _door.lockDoor();
+                        _chargeControl.startCharge();
+                        _oldId = id_rfid;
+                        //Skriv til noget vindue.
+                        //Implementer en Writer klasse:
+
+
+                        //Tilføj noget over denne linje
+
+                        _display.display("Skabet er låst og din telefon lades. Brug dit RFID tag til at låse op.",1);
+                        _state = LadeSkabsState.Locked;
+                    }
+                    else
+                    {
+                        _display.display("Din telefon er ikke ordentlig tilsluttet. Prøv igen",1);
+                    }
+                    break;
+            }
         }
         
         private void OpenDoorEventHandler(object sender, EventArgs e)
@@ -64,7 +100,7 @@ namespace SWT_ladeskab
 
         private void CloseDoorEventHandler(object sender, EventArgs e)
         {
-            _state = LadeSkabsState.Locked;
+            _state = LadeSkabsState.Available;
             _display.display("Indlæs RFID",1);
         }
 
