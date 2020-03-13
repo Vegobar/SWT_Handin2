@@ -2,6 +2,7 @@
 using System.IO;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -17,10 +18,10 @@ namespace core_functionality
             }
         }
 
-        public static void log(string TextToPrint, int RFID_id, TextWriter w)
+        private void log(string TextToPrint, int RFID_id, TextWriter w)
         {
             w.WriteLine($"{DateTime.Now.ToLongTimeString()}{DateTime.Now.ToLongDateString()}");
-            w.WriteLine($":{TextToPrint}{RFID_id}");
+            w.WriteLine($":{TextToPrint}", RFID_id);
         }
     }
 }
