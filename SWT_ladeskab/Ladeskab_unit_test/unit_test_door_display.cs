@@ -12,7 +12,7 @@ using UsbSimulator;
 
 namespace Ladeskab_unit_test
 {
-    public class unit_test_ladeskab
+    public class unit_test_door_display
     {
         [TestFixture]
         class Sub_tester
