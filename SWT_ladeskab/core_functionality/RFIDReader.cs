@@ -12,7 +12,7 @@ namespace SWT_ladeskab
 
         public event EventHandler<RfidDetectedEventArgs> RfidDetectedEvent;
 
-        protected virtual void onRfidDetectedEvent(RfidDetectedEventArgs e)
+        public void onRfidDetectedEvent()
         {
             int detectedId = int.Parse(Console.ReadLine());
             RfidDetectedEvent?.Invoke(this,new RfidDetectedEventArgs(){id = detectedId});
