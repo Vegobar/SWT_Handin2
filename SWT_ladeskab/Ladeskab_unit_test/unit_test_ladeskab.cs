@@ -38,7 +38,7 @@ namespace Ladeskab_unit_test
             }
 
 
-            [Test]
+           /* [Test]
             public void testingOpenDoorInvokation()
             {
                 var wasCalled = false;
@@ -56,7 +56,7 @@ namespace Ladeskab_unit_test
                 _door.ClosedDoorEvent += Raise.EventWith(new ClosedDoorEventArgs());
 
                 Assert.True(wasCalledClose);
-            }
+            }*/
 
             [Test]
             public void testlockDoor()
