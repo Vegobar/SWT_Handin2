@@ -26,11 +26,12 @@ namespace SWT_ladeskab
 
         private int _oldId;
 
-        public StationControl(IDoor door, IDisplay display, IRFIDReader rfid)
+        public StationControl(IDoor door, IDisplay display, IRFIDReader rfid,IChargeControl chargeControl)
         {
             _display = display;
             _door = door;
             _rfid = rfid;
+            _chargeControl = chargeControl;
 
             //Events
             _door.OpenDoorEvent += OpenDoorEventHandler;
@@ -54,19 +55,17 @@ namespace SWT_ladeskab
         {
             throw new NotImplementedException();
         }
-        //you wrong! :((((((
+        
         private void OpenDoorEventHandler(object sender, EventArgs e)
         {
             _state = LadeSkabsState.DoorOpen;
             _display.display("Tilslut telefon",1);
-           // _door.unlockDoor();
         }
 
         private void CloseDoorEventHandler(object sender, EventArgs e)
         {
             _state = LadeSkabsState.Locked;
             _display.display("Indlæs RFID",1);
-            //_door.lockDoor();
         }
 
         private void RfidDetectedEventHandler(object sender, RfidDetectedEventArgs e)
