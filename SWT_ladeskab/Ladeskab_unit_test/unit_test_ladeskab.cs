@@ -38,25 +38,25 @@ namespace Ladeskab_unit_test
             }
 
 
-           /* [Test]
-            public void testingOpenDoorInvokation()
-            {
-                var wasCalled = false;
-                _door.OpenDoorEvent += (sender, args) => wasCalled = true;
-                _door.OpenDoorEvent += Raise.EventWith(new OpenDoorEventArgs());
-
-                Assert.True(wasCalled);
-            }
-
             [Test]
-            public void testingCloseDoorInvokation()
-            {
-                var wasCalledClose = false;
-                _door.ClosedDoorEvent += (sender, args) => wasCalledClose = true;
-                _door.ClosedDoorEvent += Raise.EventWith(new ClosedDoorEventArgs());
+             public void testingOpenDoorInvokation()
+             {
+                 var wasCalled = false;
+                 _door.OpenDoorEvent += (sender, args) => wasCalled = true;
+                 _door.OpenDoorEvent += Raise.EventWith(new OpenDoorEventArgs());
 
-                Assert.True(wasCalledClose);
-            }*/
+                 Assert.True(wasCalled);
+             }
+
+             [Test]
+             public void testingCloseDoorInvokation()
+             {
+                 var wasCalledClose = false;
+                 _door.ClosedDoorEvent += (sender, args) => wasCalledClose = true;
+                 _door.ClosedDoorEvent += Raise.EventWith(new ClosedDoorEventArgs());
+
+                 Assert.True(wasCalledClose);
+             }
 
             [Test]
             public void testlockDoor()
