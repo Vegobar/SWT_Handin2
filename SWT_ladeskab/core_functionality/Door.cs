@@ -19,11 +19,6 @@ namespace SWT_ladeskab
             _isLocked = false;
         }
 
-        public bool getDoorState()
-        {
-            return _isLocked;
-        }
-
         public void open()
         {
             if(!_isLocked)
