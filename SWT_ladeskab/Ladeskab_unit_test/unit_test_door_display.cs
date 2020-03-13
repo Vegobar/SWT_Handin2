@@ -31,7 +31,7 @@ namespace Ladeskab_unit_test
             public void Setup()
             {
                 _stationControl = Substitute.For<IStationControl>();
-                _door = Substitute.For<Door>();
+                _door = Substitute.For<IDoor>();
                 _display = Substitute.For<IDisplay>();
           
 
