@@ -1,4 +1,5 @@
 ﻿using System;
+using SWT_ladeskab;
 
 class Program
 {
@@ -7,6 +8,7 @@ class Program
         // Assemble your system here from all the classes
 
         //Make objects, so that we can call door methods and rfidreader.
+        IRFIDReader rfidReader;
 
         bool finish = false;
         do
@@ -39,7 +41,8 @@ class Program
                     string idString = System.Console.ReadLine();
 
                     int id = Convert.ToInt32(idString);
-                    //rfidReader.OnRfidRead(id);
+                    rfidReader.RfidDetectedEvent(id);
+                    
                     break;
 
                 default:
