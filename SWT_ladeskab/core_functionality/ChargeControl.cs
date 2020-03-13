@@ -29,7 +29,7 @@ namespace SWT_ladeskab
         public void updateDisplayPower(double charge)
         {
             string chargeState = "";
-            if (charge == 0)
+            if (charge == 0.0)
             {
                 chargeState = "";
                 Usb.StopCharge();
@@ -68,6 +68,12 @@ namespace SWT_ladeskab
                 Usb.StopCharge();
             }
         }
+
+        public void stopCharge()
+        {
+            Usb.StopCharge();
+        }
+
         //Gets charge value from UsbCharger
         private void ChargeChangedevent(object sender, CurrentEventArgs e)
         {
