@@ -14,9 +14,9 @@ namespace SWT_ladeskab
         UserDisplay _uDisplay;
         chargeDisplay _cDisplay;
 
-        public void display(string text1, int id)
+        public void display(string text1, int display_num)
         {
-            switch (id)
+            switch (display_num)
             {
                 case 1:
                     _userString = text1;

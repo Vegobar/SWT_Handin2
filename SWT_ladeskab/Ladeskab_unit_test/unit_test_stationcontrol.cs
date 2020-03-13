@@ -32,7 +32,7 @@ namespace Ladeskab_unit_test
                 _door = Substitute.For<IDoor>();
                 _display = Substitute.For<IDisplay>();
 
-                _stationControl = new SWT_ladeskab.StationControl(_door, _display, _rfidReader);
+                _stationControl = new SWT_ladeskab.StationControl(_door, _display, _rfidReader,_chargeControl);
             }
 
             [Test]
@@ -46,7 +46,7 @@ namespace Ladeskab_unit_test
             public void testCloseOpenEventHandler()
             {
                 _door.ClosedDoorEvent += Raise.EventWith(new ClosedDoorEventArgs());
-               // _display.Received(1).display("Indlæs RFID");
+               //_display.Received(1).display("Indlæs RFID");
             }
         }
     }

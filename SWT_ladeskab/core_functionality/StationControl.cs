@@ -26,11 +26,12 @@ namespace SWT_ladeskab
 
         private int _oldId;
 
-        public StationControl(IDoor door, IDisplay display, IRFIDReader rfid)
+        public StationControl(IDoor door, IDisplay display, IRFIDReader rfid,IChargeControl chargeControl)
         {
             _display = display;
             _door = door;
             _rfid = rfid;
+            _chargeControl = chargeControl;
 
             //Events
             _door.OpenDoorEvent += OpenDoorEventHandler;
@@ -40,33 +41,67 @@ namespace SWT_ladeskab
 
         }
 
-        public void LogDoorLocked(int id)
+        public void LogDoorLocked(int id_rfid)
         {
             throw new NotImplementedException();
         }
 
-        public bool CheckId(int OldID, int id)
+        public bool CheckId(int OldID_rfid, int id_rfid)
         {
-            throw new NotImplementedException();
+            if (OldID_rfid == id_rfid)
+                return true;
+            else
+                return false;
         }
 
-        public void RfidDetected(int id)
+        public void RfidDetected(int id_rfid)
         {
-            throw new NotImplementedException();
+            switch(_state)
+            {
+                case LadeSkabsState.Locked:
+                    if (CheckId(_oldId, id_rfid))
+                    {
+                        _chargeControl.StopCharge();
+                        _door.unlockDoor();
+                    }
+                    break;
+
+                case LadeSkabsState.DoorOpen:
+                    break;
+
+                case LadeSkabsState.Available:
+                    if (_chargeControl.isConnected())
+                    {
+                        _door.lockDoor();
+                        _chargeControl.startCharge();
+                        _oldId = id_rfid;
+                        //Skriv til noget vindue.
+                        //Implementer en Writer klasse:
+
+
+                        //Tilføj noget over denne linje
+
+                        _display.display("Skabet er låst og din telefon lades. Brug dit RFID tag til at låse op.",1);
+                        _state = LadeSkabsState.Locked;
+                    }
+                    else
+                    {
+                        _display.display("Din telefon er ikke ordentlig tilsluttet. Prøv igen",1);
+                    }
+                    break;
+            }
         }
-        //you wrong! :((((((
+        
         private void OpenDoorEventHandler(object sender, EventArgs e)
         {
             _state = LadeSkabsState.DoorOpen;
             _display.display("Tilslut telefon",1);
-           // _door.unlockDoor();
         }
 
         private void CloseDoorEventHandler(object sender, EventArgs e)
         {
-            _state = LadeSkabsState.Locked;
+            _state = LadeSkabsState.Available;
             _display.display("Indlæs RFID",1);
-            //_door.lockDoor();
         }
 
         private void RfidDetectedEventHandler(object sender, RfidDetectedEventArgs e)
