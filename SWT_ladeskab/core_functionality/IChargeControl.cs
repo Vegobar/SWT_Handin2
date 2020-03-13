@@ -14,8 +14,6 @@ namespace SWT_ladeskab
         void updateDisplayPower(double value);
         bool isConnected();
         void startCharge();
-        void stopCharge();
-
     }
 
     public class ChargeDisplayEventArgs : EventArgs

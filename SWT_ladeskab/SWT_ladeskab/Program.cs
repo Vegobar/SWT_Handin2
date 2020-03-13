@@ -51,11 +51,6 @@ class Program
                     rfidReader.onRfidDetectedEvent();
                    break;
 
-                case 'P':
-                case 'p':
-                    stationControl.stopcharge();
-                    break;
-
                 default:
                     break;
             }
