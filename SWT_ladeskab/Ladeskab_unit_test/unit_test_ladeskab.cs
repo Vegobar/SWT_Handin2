@@ -17,7 +17,7 @@ namespace Ladeskab_unit_test
         [TestFixture]
         class Sub_tester
         {
-            
+
             private IStationControl _stationControl;
             private IRFIDReader _rfidReader;
             private IChargeControl _chargeControl;
@@ -31,11 +31,9 @@ namespace Ladeskab_unit_test
             public void Setup()
             {
                 _stationControl = Substitute.For<IStationControl>();
-                _rfidReader = Substitute.For<IRFIDReader>();
-                _chargeControl = Substitute.For<IChargeControl>();
-                _door = Substitute.For<IDoor>();
+                _door = Substitute.For<Door>();
                 _display = Substitute.For<IDisplay>();
-                _usbCharger = Substitute.For<IUsbCharger>();
+          
 
             }
 
@@ -61,12 +59,14 @@ namespace Ladeskab_unit_test
             }
 
             [Test]
-            public void testingEventDoorSubscription()
+            public void testlockDoor()
             {
-                _door.open();
-                
-              
+                _door.lockDoor();
+                Assert.That(_door.getDoorState(), Is.True);
             }
+
+
+
         }
     }
 }
