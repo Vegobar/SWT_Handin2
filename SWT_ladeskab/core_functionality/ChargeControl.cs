@@ -82,8 +82,11 @@ namespace SWT_ladeskab
         //Gets charge value from UsbCharger
         private void ChargeChangedevent(object sender, CurrentEventArgs e)
         {
-            CurrentCharge = e.Current;
-            updateDisplayPower(CurrentCharge);
+            if (CurrentCharge != e.Current)
+            {
+                CurrentCharge = e.Current;
+                updateDisplayPower(CurrentCharge);
+            }
         }
 
         private void onChargeDisplayEvent(string message)
