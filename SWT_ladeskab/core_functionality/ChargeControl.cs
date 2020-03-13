@@ -11,19 +11,20 @@ using UsbSimulator;
 namespace SWT_ladeskab
 {
 
-    class ChargeControl : IChargeControl
+   public class ChargeControl : IChargeControl
     { 
         IUsbCharger Usb = new UsbChargerSimulator();
         IDisplay chargeDisplay = new Display();
 
-        private bool connected { get; set; }
+        public bool connected { get; set; }
         static private double CurrentCharge { get; set; }
 
         public event EventHandler<ChargeDisplayEventArgs> ChargeDisplayEvent;
 
-        ChargeControl()
+       public ChargeControl()
         {
             Usb.CurrentValueEvent += ChargeChangedevent;
+            connected = true;
         }
 
         public void updateDisplayPower(double charge)

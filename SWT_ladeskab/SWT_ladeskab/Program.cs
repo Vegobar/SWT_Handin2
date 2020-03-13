@@ -1,4 +1,5 @@
 ﻿using System;
+using core_functionality;
 using SWT_ladeskab;
 
 class Program
@@ -9,6 +10,11 @@ class Program
 
         //Make objects, so that we can call door methods and rfidreader.
         IRFIDReader rfidReader = new RFIDReader();
+        IDoor door = new Door();
+        IDisplay display = new Display();
+        IChargeControl chargeControl = new ChargeControl();
+
+        IStationControl stationControl = new StationControl(door, display, rfidReader,chargeControl);
 
         bool finish = false;
         do
@@ -27,12 +33,12 @@ class Program
 
                 case 'O':
                 case 'o':
-                    //door.OnDoorOpen();
+                    door.open();
                     break;
 
                 case 'C':
                 case 'c':
-                    //door.OnDoorClose();
+                    door.close();
                     break;
 
                 case 'R':
@@ -43,6 +49,10 @@ class Program
                     int id = Convert.ToInt32(idString);*/
                     rfidReader.onRfidDetectedEvent();
                     
+                    break;
+
+                case 'P':
+                case 'p':
                     break;
 
                 default:

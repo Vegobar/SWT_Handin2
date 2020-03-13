@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SWT_ladeskab
 {
-    class RFIDReader: IRFIDReader
+    public class RFIDReader: IRFIDReader
     {
         private IRFIDReader _irfidReaderImplementation;
 

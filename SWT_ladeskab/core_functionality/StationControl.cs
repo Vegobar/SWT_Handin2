@@ -6,6 +6,7 @@ using System.Resources;
 using System.Runtime.Remoting.Messaging;
 using System.Text;
 using System.Threading.Tasks;
+using core_functionality;
 
 
 namespace SWT_ladeskab
@@ -24,7 +25,7 @@ namespace SWT_ladeskab
         private IDoor _door;
         private IDisplay _display;
         private IRFIDReader _rfid;
-        private ILog _log;
+        private ILog _log = new Log();
 
         public string currentDisplay { get; set; }
 

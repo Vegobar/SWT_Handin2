@@ -8,11 +8,11 @@ namespace SWT_ladeskab
 {
     public class Display : IDisplay
     {
-        string _userString;
-        string _chargeString;
+        private string _userString = "";
+        private string _chargeString = "";
 
-        UserDisplay _uDisplay;
-        chargeDisplay _cDisplay;
+        UserDisplay _uDisplay = new UserDisplay();
+        chargeDisplay _cDisplay = new chargeDisplay();
 
         public void display(string text1, int display_num)
         {
