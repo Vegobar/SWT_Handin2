@@ -9,7 +9,7 @@ namespace Ladeskab_unit_test
     public class unit_test_stationcontrol
     {
         [TestFixture]
-        private class Sub_tester
+        private class Nunit_test_stationcontrol
         {
             private StationControl _stationControl;
             private IRFIDReader _rfidReader;

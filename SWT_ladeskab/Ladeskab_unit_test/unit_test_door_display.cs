@@ -16,7 +16,7 @@ namespace Ladeskab_unit_test
     public class unit_test_door_display
     {
         [TestFixture]
-        class Sub_tester
+        class NUnit_test_door_display
         {
 
             private IStationControl _stationControl;
