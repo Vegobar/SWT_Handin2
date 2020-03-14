@@ -26,9 +26,7 @@ namespace SWT_ladeskab
         private IDisplay _display;
         private IRFIDReader _rfid;
         private ILog _log = new Log();
-
-        public string currentDisplay { get; set; }
-
+        
         private int _oldId;
 
         public StationControl(IDoor door, IDisplay display, IRFIDReader rfid,IChargeControl chargeControl)
@@ -124,8 +122,7 @@ namespace SWT_ladeskab
 
         private void ChargeDisplayEventHandler(object sender, ChargeDisplayEventArgs e)
         {
-            currentDisplay = e.msg;
-            _display.display(currentDisplay,2);
+            _display.display(e.msg,2);
         }
     }
 }
