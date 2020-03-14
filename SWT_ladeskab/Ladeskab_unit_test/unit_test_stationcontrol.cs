@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Castle.Core.Smtp;
 using NSubstitute;
 using NUnit.Framework;
 using SWT_ladeskab;
@@ -60,6 +61,16 @@ namespace Ladeskab_unit_test
             {
                 var result = _stationControl.CheckId(30, 35);
                 Assert.IsFalse(result);
+            }
+
+            [Test]
+            public void testRFIDDetectedEvent()
+            {
+                var wasCalled = false;
+                _rfidReader.RfidDetectedEvent += (sender, args) => wasCalled = true;
+
+                _rfidReader.RfidDetectedEvent += Raise.EventWith(new RfidDetectedEventArgs());
+                Assert.True(wasCalled);
             }
         }
     }
