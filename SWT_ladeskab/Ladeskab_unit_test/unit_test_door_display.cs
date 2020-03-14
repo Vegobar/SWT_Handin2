@@ -29,21 +29,23 @@ namespace Ladeskab_unit_test
             [Test]
              public void testingOpenDoorInvokation()
              {
-                //Assert
+                //Arrange
                 _door = Substitute.For<IDoor>();
                 _stationControl = new StationControl(_door, _display, _rfidReader, _chargeControl);
 
+                //Act
                 var wasCalled = false;
                  _door.OpenDoorEvent += (sender, args) => wasCalled = true;
                  _door.OpenDoorEvent += Raise.EventWith(new OpenDoorEventArgs());
 
+                //Assert
                  Assert.True(wasCalled);
              }
 
              [Test]
              public void testingCloseDoorInvokation()
              {
-                // Assert
+                // Arrange
                 _door = Substitute.For<IDoor>();
                 _stationControl = new StationControl(_door, _display, _rfidReader, _chargeControl);
 
@@ -52,9 +54,38 @@ namespace Ladeskab_unit_test
                  _door.ClosedDoorEvent += (sender, args) => wasCalledClose = true;
                  _door.ClosedDoorEvent += Raise.EventWith(new ClosedDoorEventArgs());
 
+                //Assert
                  Assert.True(wasCalledClose);
              }
 
+            [Test]
+            public void testingDoorLocked()
+            {
+                // Arrange
+                Door doorTest = new Door();
+                _stationControl = Substitute.For<StationControl>(doorTest, _display, _rfidReader, _chargeControl);
+
+                // Act
+                _stationControl.RfidDetected(123);
+
+                //Assert
+                Assert.IsTrue(doorTest.IsLocked);
+            }
+
+            [Test]
+            public void testDoorUnlocked()
+            {
+                //Arrange
+                Door doorTest = new Door();
+                _stationControl = Substitute.For<StationControl>(doorTest, _display, _rfidReader, _chargeControl);
+
+                //Ac
+                _stationControl.RfidDetected(123);
+                _stationControl.RfidDetected(123);
+
+                Assert.IsFalse(doorTest.IsLocked);
+
+            }
 
         }
     }

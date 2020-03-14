@@ -19,6 +19,12 @@ namespace SWT_ladeskab
             _isLocked = false;
         }
 
+        public bool IsLocked
+        {
+            get { return _isLocked; }
+        }
+
+
         public void open()
         {
             if(!_isLocked)
