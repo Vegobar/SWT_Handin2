@@ -88,7 +88,7 @@ namespace Ladeskab_unit_test
             }
 
             [Test]
-            public void testDisplay()
+            public void testDisplayOpenDoor()
             {
                 _door = new Door();
                 _stationControl = Substitute.For<StationControl>(_door, _display, _rfidReader, _chargeControl);
@@ -98,6 +98,26 @@ namespace Ladeskab_unit_test
                 _display.Received(1).display("Tilslut telefon", 1);
             }
 
+
+            [Test]
+            public void check()
+            {
+                _receivedDoorArgs = null;
+                _door = new Door();
+                _door.open();
+
+                _door.OpenDoorEvent +=
+                    (o, args) =>
+                    {
+                        _receivedDoorArgs = args;
+                    };
+
+                _door.open();
+                Assert.That(_receivedDoorArgs, Is.Not.Null);
+
+                }
+
         }
+
     }
 }

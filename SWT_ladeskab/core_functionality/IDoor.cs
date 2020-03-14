@@ -19,7 +19,7 @@ namespace SWT_ladeskab
 
     public class OpenDoorEventArgs : EventArgs
         {
-        
+            public string DoorOpen { get; set; }
         }
 
      public class ClosedDoorEventArgs : EventArgs
