@@ -31,7 +31,7 @@ namespace Ladeskab_unit_test
             {
                 _chargeControl.isConnected().Returns(false);
 
-                _rfidReader.RfidDetectedEvent += Raise.EventWith(new RfidDetectedEventArgs());
+                _rfidReader.RfidDetectedEvent += Raise.EventWith(new RfidDetectedEventArgs(){id = 123});
 
                 _display.Received(1).display("Din telefon er ikke ordentlig tilsluttet. Prøv igen", 1);
             }
@@ -41,7 +41,7 @@ namespace Ladeskab_unit_test
             {
                 _chargeControl.isConnected().Returns(true);
 
-                _rfidReader.RfidDetectedEvent += Raise.EventWith(new RfidDetectedEventArgs());
+                _rfidReader.RfidDetectedEvent += Raise.EventWith(new RfidDetectedEventArgs(){id = 123});
 
                 _display.Received(1).display("Skabet er låst og din telefon lades. Brug dit RFID tag til at låse op.",
                     1);
