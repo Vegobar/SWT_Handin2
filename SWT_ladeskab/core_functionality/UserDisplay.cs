@@ -1,4 +1,5 @@
-﻿using System;
+﻿using core_functionality;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,14 +7,9 @@ using System.Threading.Tasks;
 
 namespace SWT_ladeskab
 {
-    public class UserDisplay : IDisplay
+    public class UserDisplay : IConsoleOutput
     {
-        public void display(string text, int id)
-        {
-            //Not implemented
-        }
-
-        public void display(string text)
+        public void displayText(string text)
         {
             Console.WriteLine(text);
         }

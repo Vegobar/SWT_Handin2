@@ -99,6 +99,16 @@ namespace Ladeskab_unit_test
                 _display.Received(1).display("Tilslut telefon", 1);
             }
 
+            [Test]
+            public void testDisplayCloseDoor()
+            {
+                _door = new Door();
+                _stationControl = Substitute.For<StationControl>(_door, _display, _rfidReader, _chargeControl);
+                _door.close();
+                _display.Received(1).display("Skabet er låst og din telefon lades. Brug dit RFID tag til at låse op.", 1);
+            }
+
+
 
             [Test]
             public void check_EventFiredOpenDoor()

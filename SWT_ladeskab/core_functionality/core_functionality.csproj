@@ -46,6 +46,7 @@
     <Compile Include="Display.cs" />
     <Compile Include="Door.cs" />
     <Compile Include="IChargeControl.cs" />
+    <Compile Include="IConsoleOutput.cs" />
     <Compile Include="IDisplay.cs" />
     <Compile Include="IDoor.cs" />
     <Compile Include="ILog.cs" />
