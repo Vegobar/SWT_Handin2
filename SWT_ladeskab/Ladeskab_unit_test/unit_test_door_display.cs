@@ -87,6 +87,17 @@ namespace Ladeskab_unit_test
 
             }
 
+            [Test]
+            public void testDisplay()
+            {
+                _door = new Door();
+                _stationControl = Substitute.For<StationControl>(_door, _display, _rfidReader, _chargeControl);
+
+                _door.open();
+
+                _display.Received(1).display("Tilslut telefon", 1);
+            }
+
         }
     }
 }
