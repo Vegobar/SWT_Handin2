@@ -19,29 +19,21 @@ namespace Ladeskab_unit_test
         {
 
             private IStationControl _stationControl;
-            private IRFIDReader _rfidReader;
-            private IChargeControl _chargeControl;
             private IDoor _door;
-            private IDisplay _display;
-            private IUsbCharger _usbCharger;
+            private IDisplay _display = Substitute.For<Display>();
+            private IChargeControl _chargeControl = Substitute.For<ChargeControl>();
+            private IRFIDReader _rfidReader = Substitute.For<RFIDReader>();
             private OpenDoorEventArgs _receivedDoorArgs;
-
-
-            [SetUp]
-            public void Setup()
-            {
-                _stationControl = Substitute.For<IStationControl>();
-                _door = Substitute.For<IDoor>();
-                _display = Substitute.For<IDisplay>();
-          
-
-            }
 
 
             [Test]
              public void testingOpenDoorInvokation()
              {
-                 var wasCalled = false;
+                //Assert
+                _door = Substitute.For<IDoor>();
+                _stationControl = new StationControl(_door, _display, _rfidReader, _chargeControl);
+
+                var wasCalled = false;
                  _door.OpenDoorEvent += (sender, args) => wasCalled = true;
                  _door.OpenDoorEvent += Raise.EventWith(new OpenDoorEventArgs());
 
@@ -51,20 +43,17 @@ namespace Ladeskab_unit_test
              [Test]
              public void testingCloseDoorInvokation()
              {
-                 var wasCalledClose = false;
+                // Assert
+                _door = Substitute.For<IDoor>();
+                _stationControl = new StationControl(_door, _display, _rfidReader, _chargeControl);
+
+                //Act
+                var wasCalledClose = false;
                  _door.ClosedDoorEvent += (sender, args) => wasCalledClose = true;
                  _door.ClosedDoorEvent += Raise.EventWith(new ClosedDoorEventArgs());
 
                  Assert.True(wasCalledClose);
              }
-
-            [Test]
-            public void testlockDoor()
-            {
-                _door.lockDoor();
-               // Assert.That(_door.getDoorState(), Is.True);
-            }
-
 
 
         }
