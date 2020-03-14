@@ -29,11 +29,11 @@ namespace Ladeskab_unit_test
             [Test]
             public void test_conncted_phone_false()
             {
-                _chargeControl.isConnected().Returns(true);
+                _chargeControl.isConnected().Returns(false);
 
                 _rfidReader.RfidDetectedEvent += Raise.EventWith(new RfidDetectedEventArgs());
 
-                _display.Received(1).display("Forkert RFID tag", 1);
+                _display.Received(1).display("Din telefon er ikke ordentlig tilsluttet. Prøv igen", 1);
             }
 
             [Test]
