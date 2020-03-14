@@ -1,4 +1,5 @@
-﻿using NSubstitute;
+﻿using core_functionality;
+using NSubstitute;
 using NUnit.Framework;
 using SWT_ladeskab;
 
@@ -16,8 +17,9 @@ namespace Ladeskab_unit_test
                 _chargeControl = Substitute.For<IChargeControl>();
                 _door = Substitute.For<IDoor>();
                 _display = Substitute.For<IDisplay>();
+                _log = Substitute.For<ILog>();
 
-                _stationControl = new StationControl(_door, _display, _rfidReader, _chargeControl);
+                _stationControl = new StationControl(_door, _display, _rfidReader, _chargeControl, _log);
             }
 
             private StationControl _stationControl;
@@ -25,6 +27,7 @@ namespace Ladeskab_unit_test
             private IChargeControl _chargeControl;
             private IDoor _door;
             private IDisplay _display;
+            private ILog _log;
 
             [Test]
             public void test_conncted_phone_false()
@@ -135,6 +138,30 @@ namespace Ladeskab_unit_test
 
                 _rfidReader.RfidDetectedEvent += Raise.EventWith(new RfidDetectedEventArgs());
                 Assert.True(wasCalled);
+            }
+
+            [Test]
+            public void test_logger_called()
+            {
+                _chargeControl.isConnected().Returns((true));
+                
+                _rfidReader.RfidDetectedEvent += Raise.EventWith(new RfidDetectedEventArgs {id = 123});
+                _rfidReader.RfidDetectedEvent += Raise.EventWith(new RfidDetectedEventArgs {id = 123});
+                
+                _log.Received(1).PrintToFile(": Skab låst med RFID: ",123 );
+                _log.Received(1).PrintToFile(": Skab låst op med RFID: ",123 );
+            }
+            
+            [Test]
+            public void test_logger_called_wrong_id()
+            {
+                _chargeControl.isConnected().Returns((true));
+                
+                _rfidReader.RfidDetectedEvent += Raise.EventWith(new RfidDetectedEventArgs {id = 123});
+                _rfidReader.RfidDetectedEvent += Raise.EventWith(new RfidDetectedEventArgs {id = 124});
+                
+                _log.Received(1).PrintToFile(": Skab låst med RFID: ",123 );
+                _log.Received(0).PrintToFile(": Skab låst op med RFID: ",123 );
             }
         }
     }
