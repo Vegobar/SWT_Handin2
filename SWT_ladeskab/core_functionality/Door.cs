@@ -19,15 +19,21 @@ namespace SWT_ladeskab
             _isLocked = false;
         }
 
+        public bool IsLocked
+        {
+            get { return _isLocked; }
+        }
+
+
         public void open()
         {
             if(!_isLocked)
-            OnDoorOpenEvent(new OpenDoorEventArgs());
+            OnDoorOpenEvent(new OpenDoorEventArgs{DoorOpen="Door is open"});
         }
 
         public void close()
         {
-            OnClosedDoorEvent(new ClosedDoorEventArgs());
+            OnClosedDoorEvent(new ClosedDoorEventArgs { DoorClosed = "Door is closed" });
         }
 
         public event EventHandler<OpenDoorEventArgs> OpenDoorEvent;
@@ -35,12 +41,12 @@ namespace SWT_ladeskab
 
         protected virtual void OnDoorOpenEvent(OpenDoorEventArgs e)
         {
-            OpenDoorEvent?.Invoke(this, null);
+            OpenDoorEvent?.Invoke(this, e);
         }
 
         protected virtual void OnClosedDoorEvent(ClosedDoorEventArgs e)
         {
-            ClosedDoorEvent?.Invoke(this, null);
+            ClosedDoorEvent?.Invoke(this, e);
         }
     }
 }

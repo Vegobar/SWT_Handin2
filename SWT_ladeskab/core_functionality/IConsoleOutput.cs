@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SWT_ladeskab
+namespace core_functionality
 {
-    public interface IDisplay
+    public interface IConsoleOutput
     {
-         void display(string text, int display_num);
+        void displayText(string text);
     }
 }

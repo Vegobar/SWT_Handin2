@@ -20,24 +20,20 @@ namespace SWT_ladeskab
             {
                 case 1:
                     _userString = text1;
-                    _uDisplay.display(_userString);
-                    _cDisplay.display(_chargeString);
+                    _uDisplay.displayText(_userString);
+                    _cDisplay.displayText(_chargeString);
                     break;
 
                 case 2:
                     if (string.Compare(_chargeString, text1) != 0)
                     {
                         _chargeString = text1;
-                        _uDisplay.display(_userString);
-                        _cDisplay.display(_chargeString);
+                        _uDisplay.displayText(_userString);
+                        _cDisplay.displayText(_chargeString);
                     }
 
                     break;
             }
-        }
-
-        public void display(string text1)
-        { // Not implemented
         }
     }
 }

@@ -3,17 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using core_functionality;
 
 namespace SWT_ladeskab
 {
-    public class chargeDisplay : IDisplay
+    public class chargeDisplay : IConsoleOutput
     {
-        public void display(string text, int id)
-        {
-            // Not implemented
-        }
-
-        public void display(string text)
+   
+        public void displayText(string text)
         {
             Console.WriteLine(text);
         }
