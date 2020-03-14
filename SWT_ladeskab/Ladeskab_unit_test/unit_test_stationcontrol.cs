@@ -61,9 +61,6 @@ namespace Ladeskab_unit_test
                 var result = _stationControl.CheckId(30, 35);
                 Assert.IsFalse(result);
             }
-            
-            
-            
         }
     }
 }
