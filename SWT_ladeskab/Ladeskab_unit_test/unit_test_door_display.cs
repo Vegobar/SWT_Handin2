@@ -208,11 +208,8 @@ namespace Ladeskab_unit_test
                 _rfidReader.onRfidDetectedEvent(123);
                 _rfidReader.onRfidDetectedEvent(125);
 
-                _display.Received(1).display("Phone is charging", 1);
+                _display.Received(1).display("Forkert RFID tag", 1);
             }
-
-
-
 
         }
 
