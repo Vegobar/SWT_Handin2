@@ -20,16 +20,25 @@ namespace SWT_ladeskab
             {
                 case 1:
                     _userString = text1;
+                    Console.WriteLine("**************************************");
                     _uDisplay.displayText(_userString);
+                    Console.WriteLine("**************************************");
+                    Console.WriteLine("**************************************");
                     _cDisplay.displayText(_chargeString);
+                    Console.WriteLine("**************************************");
+
                     break;
 
                 case 2:
                     if (string.Compare(_chargeString, text1) != 0)
                     {
                         _chargeString = text1;
+                        Console.WriteLine("**************************************");
                         _uDisplay.displayText(_userString);
+                        Console.WriteLine("**************************************");
+                        Console.WriteLine("**************************************");
                         _cDisplay.displayText(_chargeString);
+                        Console.WriteLine("**************************************");
                     }
 
                     break;
