@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using Castle.Core.Smtp;
 using NSubstitute;
+using NSubstitute.Core.Arguments;
+using NSubstitute.ReceivedExtensions;
 using NUnit.Framework;
 using SWT_ladeskab;
 using UsbSimulator;
@@ -17,21 +19,42 @@ namespace Ladeskab_unit_test
         [TestFixture]
         class Sub_tester
         {
-            private StationControl _stationControl;
-            private IRFIDReader _rfidReader;
             private IChargeControl _chargeControl;
-            private IDoor _door;
-            private IDisplay _display;
+            private ChargeControl uut;
+            private IUsbCharger _usbCharger;
+            private CurrentEventArgs _currentArgs;
+            private ChargeDisplayEventArgs _chargeDisplayArgs;
 
             [SetUp]
             public void Setup()
             {
-                _rfidReader = Substitute.For<IRFIDReader>();
+               
                 _chargeControl = Substitute.For<IChargeControl>();
-                _door = Substitute.For<IDoor>();
-                _display = Substitute.For<IDisplay>();
+                _usbCharger = Substitute.For<IUsbCharger>();
+                uut = Substitute.For<ChargeControl>();
+                _usbCharger.CurrentValueEvent += (o, args) => { _currentArgs = args; };
+                uut.ChargeDisplayEvent += (o, args) => { _chargeDisplayArgs = args; };
+            }
 
-                _stationControl = new StationControl(_door, _display, _rfidReader, _chargeControl);
+            [Test]
+            public void uut_chargeChangedEvent_test()
+            {
+                _usbCharger.CurrentValueEvent += Raise.EventWith(new CurrentEventArgs() {Current = 25.0});
+                uut.Received(1).updateDisplayPower(uut.CurrentCharge);
+            }
+
+            [Test]
+            public void uut_isConnected_test()
+            {
+                uut.startCharge();
+                uut.Received(1).isConnected();
+            }
+
+            [Test]
+            public void uut_stopCharge_test()
+            {
+                uut.stopCharge();
+                _usbCharger.ReceivedCalls();
             }
 
         }

@@ -18,7 +18,7 @@ namespace SWT_ladeskab
         IDisplay chargeDisplay = new Display();
 
         public bool connected { get; set; }
-        static private double CurrentCharge { get; set; }
+        public double CurrentCharge { get; set; }
 
         public event EventHandler<ChargeDisplayEventArgs> ChargeDisplayEvent;
 
