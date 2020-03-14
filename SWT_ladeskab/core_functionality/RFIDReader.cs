@@ -14,7 +14,21 @@ namespace SWT_ladeskab
 
         public void onRfidDetectedEvent(int RfidId)
         {
-            RfidDetectedEvent?.Invoke(this,new RfidDetectedEventArgs(){id = RfidId});
+            try
+            {
+                if (RfidId > 0)
+                {
+                    RfidDetectedEvent?.Invoke(this, new RfidDetectedEventArgs() {id = RfidId});
+                }
+                else
+                {
+                    throw new Exception("ugyldig RFID kode");
+                }
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
         }
 
     }
