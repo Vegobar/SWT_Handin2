@@ -181,13 +181,15 @@ namespace Ladeskab_unit_test
             [Test]
             public void testDisplayOpenDoor()
             {
-                _door = new Door();
+                //Arrange
+                _door = Substitute.For<IDoor>();
                 _display = new Display();
-
                 _stationControl = Substitute.For<StationControl>(_door, _display, _rfidReader, _chargeControl);
 
-                _door.open();
+                //Act
+                _door.OpenDoorEvent += Raise.EventWith(new OpenDoorEventArgs());
 
+                //Assert
                 Assert.That(_display.ReceivedString, Is.EqualTo("Tilslut telefon"));
             }
 
@@ -209,14 +211,17 @@ namespace Ladeskab_unit_test
             [Test]
             public void testDisplay_wrongTag()
             {
+                //Arrange
                 _door = Substitute.For<IDoor>();
                 _display = new Display();
                 _stationControl = Substitute.For<StationControl>(_door, _display, _rfidReader, _chargeControl);
 
+                //Act
                 _door.open();
                 _rfidReader.onRfidDetectedEvent(123);
                 _rfidReader.onRfidDetectedEvent(125);
 
+                //Assert
                 Assert.That(_display.ReceivedString, Is.EqualTo("Forkert RFID tag"));
             }
 
