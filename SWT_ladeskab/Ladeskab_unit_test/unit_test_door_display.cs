@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Castle.Core.Smtp;
+using core_functionality;
 using NSubstitute;
 using NUnit.Framework;
 using SWT_ladeskab;
