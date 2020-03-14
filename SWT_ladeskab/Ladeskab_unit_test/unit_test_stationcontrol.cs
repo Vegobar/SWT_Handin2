@@ -163,6 +163,8 @@ namespace Ladeskab_unit_test
                 _log.Received(1).PrintToFile(": Skab låst med RFID: ",123 );
                 _log.Received(0).PrintToFile(": Skab låst op med RFID: ",123 );
             }
+            
+            
         }
     }
 }

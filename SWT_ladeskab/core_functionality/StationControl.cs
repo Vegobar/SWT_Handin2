@@ -96,8 +96,8 @@ namespace SWT_ladeskab
                    
                     break;
 
-                case LadeSkabsState.DoorOpen:
-                    break;
+               // case LadeSkabsState.DoorOpen:
+                    //break;
 
                 case LadeSkabsState.Available:
                     if (_chargeControl.isConnected())
