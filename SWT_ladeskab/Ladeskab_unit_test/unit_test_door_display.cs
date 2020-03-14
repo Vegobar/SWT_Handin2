@@ -200,7 +200,7 @@ namespace Ladeskab_unit_test
             [Test]
             public void testDisplay_takePhoneOut()
             {
-                _display = new Display();
+                //_display = new Display();
                 _door = Substitute.For<IDoor>();
                 _stationControl = Substitute.For<StationControl>(_door, _display, _rfidReader, _chargeControl);
 
