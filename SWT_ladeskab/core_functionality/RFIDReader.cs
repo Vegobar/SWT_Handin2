@@ -17,6 +17,5 @@ namespace SWT_ladeskab
             RfidDetectedEvent?.Invoke(this,new RfidDetectedEventArgs(){id = RfidId});
         }
 
-
     }
 }

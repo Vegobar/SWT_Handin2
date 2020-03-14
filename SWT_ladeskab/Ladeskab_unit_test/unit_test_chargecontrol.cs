@@ -17,20 +17,23 @@ namespace Ladeskab_unit_test
         [TestFixture]
         class Sub_tester
         {
-            private CurrentEventArgs _currentEvent;
-            private ChargeControl uut;
+            private StationControl _stationControl;
+            private IRFIDReader _rfidReader;
+            private IChargeControl _chargeControl;
+            private IDoor _door;
+            private IDisplay _display;
 
             [SetUp]
             public void Setup()
             {
+                _rfidReader = Substitute.For<IRFIDReader>();
+                _chargeControl = Substitute.For<IChargeControl>();
+                _door = Substitute.For<IDoor>();
+                _display = Substitute.For<IDisplay>();
 
+                _stationControl = new StationControl(_door, _display, _rfidReader, _chargeControl);
             }
 
-            [TestCase()]
-            void uut_currentEvent_test(double a, double b)
-            {
-                _currentEvent.Current = a;
-            }
         }
     }
 }

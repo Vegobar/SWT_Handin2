@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using Castle.Core.Smtp;
 using NSubstitute;
+using NSubstitute.ExceptionExtensions;
 using NSubstitute.ReceivedExtensions;
 using NUnit.Framework;
 using SWT_ladeskab;
@@ -20,6 +21,7 @@ namespace Ladeskab_unit_test
         class Sub_tester
         {
             private IRFIDReader _rfidReader;
+            private RFIDReader uut;
             private RfidDetectedEventArgs _receivedRFIDargs;
 
             [SetUp]
@@ -27,6 +29,7 @@ namespace Ladeskab_unit_test
             {
                 _receivedRFIDargs = null;
                 _rfidReader = Substitute.For<IRFIDReader>();
+                uut = Substitute.For<RFIDReader>();
                 _rfidReader.RfidDetectedEvent += (o, args) => { _receivedRFIDargs = args; };
             }
 
@@ -49,6 +52,16 @@ namespace Ladeskab_unit_test
                 _rfidReader.RfidDetectedEvent += (sender, args) => wasCalled = true;
                 _rfidReader.RfidDetectedEvent += Raise.EventWith(new RfidDetectedEventArgs());
                 Assert.That(wasCalled == true);
+            }
+
+            [Test]
+            public void uut_onRFIDEvent()
+            {
+                int value = 0;
+                uut.RfidDetectedEvent += (sender, args) => value = args.id;
+                uut.onRfidDetectedEvent(25);
+                Assert.That(value == 25);
+                
             }
         }
     }
