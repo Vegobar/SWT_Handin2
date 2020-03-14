@@ -31,8 +31,9 @@ namespace Ladeskab_unit_test
             public void Setup()
             {
                 _stationControl = Substitute.For<IStationControl>();
-                _door = Substitute.For<IDoor>();
+                _door = new Door();
                 _display = Substitute.For<IDisplay>();
+                _chargeControl = Substitute.For<IChargeControl>();
           
 
             }
@@ -61,8 +62,7 @@ namespace Ladeskab_unit_test
             [Test]
             public void testlockDoor()
             {
-                _door.lockDoor();
-               // Assert.That(_door.getDoorState(), Is.True);
+               
             }
 
 
