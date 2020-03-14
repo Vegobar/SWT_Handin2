@@ -52,7 +52,7 @@ namespace SWT_ladeskab
         public string ReceivedString
         {
             get { return _receivedString; }
-            set { _receivedString = value; }
+            set { }
         }
     }
 }
