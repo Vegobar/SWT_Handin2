@@ -18,7 +18,7 @@ namespace Ladeskab_unit_test
     public class unit_test_rfidreader
     {
         [TestFixture]
-        class Sub_tester
+        class RfidTester
         {
             private IRFIDReader _rfidReader;
             private RFIDReader uut;
