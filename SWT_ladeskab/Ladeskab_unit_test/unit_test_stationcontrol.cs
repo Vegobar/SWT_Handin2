@@ -1,4 +1,5 @@
-﻿using NSubstitute;
+﻿using core_functionality;
+using NSubstitute;
 using NUnit.Framework;
 using SWT_ladeskab;
 
@@ -16,8 +17,9 @@ namespace Ladeskab_unit_test
                 _chargeControl = Substitute.For<IChargeControl>();
                 _door = Substitute.For<IDoor>();
                 _display = Substitute.For<IDisplay>();
+                _log = Substitute.For<ILog>();
 
-                _stationControl = new StationControl(_door, _display, _rfidReader, _chargeControl);
+                _stationControl = new StationControl(_door, _display, _rfidReader, _chargeControl, _log);
             }
 
             private StationControl _stationControl;
@@ -25,6 +27,7 @@ namespace Ladeskab_unit_test
             private IChargeControl _chargeControl;
             private IDoor _door;
             private IDisplay _display;
+            private ILog _log;
 
             [Test]
             public void test_conncted_phone_false()
@@ -72,6 +75,32 @@ namespace Ladeskab_unit_test
                     1);
                 _display.Received(1).display("Tag din telefon ud af skabet og luk døren", 1);
             }
+            
+            [Test]
+            public void test_LadeSkabsStateLocked_false_id_connected_false()
+            {
+                _chargeControl.isConnected().Returns(false);
+
+                _rfidReader.RfidDetectedEvent += Raise.EventWith(new RfidDetectedEventArgs {id = 123});
+                _rfidReader.RfidDetectedEvent += Raise.EventWith(new RfidDetectedEventArgs {id = 123});
+
+                _display.Received(2).display("Din telefon er ikke ordentlig tilsluttet. Prøv igen",
+                    1);
+            }
+            
+            [Test]
+            public void test_LadeSkabsStateLocked_false_id_connected_false_thenAfter_true()
+            {
+                _chargeControl.isConnected().Returns(false);
+
+                _rfidReader.RfidDetectedEvent += Raise.EventWith(new RfidDetectedEventArgs {id = 123});
+                _chargeControl.isConnected().Returns(true);
+                _rfidReader.RfidDetectedEvent += Raise.EventWith(new RfidDetectedEventArgs {id = 123});
+
+                _display.Received(1).display("Din telefon er ikke ordentlig tilsluttet. Prøv igen",
+                    1);
+                _display.Received(1).display("Skabet er låst og din telefon lades. Brug dit RFID tag til at låse op.", 1);
+            }
 
             [Test]
             public void testCheckID_false()
@@ -110,6 +139,32 @@ namespace Ladeskab_unit_test
                 _rfidReader.RfidDetectedEvent += Raise.EventWith(new RfidDetectedEventArgs());
                 Assert.True(wasCalled);
             }
+
+            [Test]
+            public void test_logger_called()
+            {
+                _chargeControl.isConnected().Returns((true));
+                
+                _rfidReader.RfidDetectedEvent += Raise.EventWith(new RfidDetectedEventArgs {id = 123});
+                _rfidReader.RfidDetectedEvent += Raise.EventWith(new RfidDetectedEventArgs {id = 123});
+                
+                _log.Received(1).PrintToFile(": Skab låst med RFID: ",123 );
+                _log.Received(1).PrintToFile(": Skab låst op med RFID: ",123 );
+            }
+            
+            [Test]
+            public void test_logger_called_wrong_id()
+            {
+                _chargeControl.isConnected().Returns((true));
+                
+                _rfidReader.RfidDetectedEvent += Raise.EventWith(new RfidDetectedEventArgs {id = 123});
+                _rfidReader.RfidDetectedEvent += Raise.EventWith(new RfidDetectedEventArgs {id = 124});
+                
+                _log.Received(1).PrintToFile(": Skab låst med RFID: ",123 );
+                _log.Received(0).PrintToFile(": Skab låst op med RFID: ",123 );
+            }
+            
+            
         }
     }
 }

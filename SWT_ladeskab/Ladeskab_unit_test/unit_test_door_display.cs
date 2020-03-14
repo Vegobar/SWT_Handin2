@@ -89,28 +89,6 @@ namespace Ladeskab_unit_test
             }
 
             [Test]
-            public void testDisplayOpenDoor()
-            {
-                _door = new Door();
-                _stationControl = Substitute.For<StationControl>(_door, _display, _rfidReader, _chargeControl);
-
-                _door.open();
-
-                _display.Received(1).display("Tilslut telefon", 1);
-            }
-
-            [Test]
-            public void testDisplayCloseDoor()
-            {
-                _door = new Door();
-                _stationControl = Substitute.For<StationControl>(_door, _display, _rfidReader, _chargeControl);
-                _door.close();
-                _display.Received(1).display("Skabet er låst og din telefon lades. Brug dit RFID tag til at låse op.", 1);
-            }
-
-
-
-            [Test]
             public void check_EventFiredOpenDoor()
             {
                 //Arrange
@@ -197,6 +175,43 @@ namespace Ladeskab_unit_test
                 Assert.AreEqual(_receivedClosedDoorArgs.DoorClosed, "Door is closed");
 
             }
+
+
+            [Test]
+            public void testDisplayOpenDoor()
+            {
+                _door = new Door();
+                _stationControl = Substitute.For<StationControl>(_door, _display, _rfidReader, _chargeControl);
+
+                _door.open();
+
+                _display.Received(1).display("Tilslut telefon", 1);
+            }
+
+            [Test]
+            public void testDisplayCloseDoor()
+            {
+                _door = new Door();
+                _stationControl = Substitute.For<StationControl>(_door, _display, _rfidReader, _chargeControl);
+                _door.close();
+                _display.Received(1).display("Skabet er låst og din telefon lades. Brug dit RFID tag til at låse op.", 1);
+            }
+
+            [Test]
+            public void testDisplay_takePhoneOut()
+            {
+                //_display = new Display();
+                _door = Substitute.For<IDoor>();
+                _stationControl = Substitute.For<StationControl>(_door, _display, _rfidReader, _chargeControl);
+
+                _door.open();
+                _rfidReader.onRfidDetectedEvent(123);
+                _rfidReader.onRfidDetectedEvent(125);
+
+                _display.Received(1).display("Phone is charging", 1);
+            }
+
+
 
 
         }
