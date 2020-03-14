@@ -17,7 +17,7 @@ namespace Ladeskab_unit_test
     public class unit_test_chargecontrol
     {
         [TestFixture]
-        class Sub_tester
+        class ChargeConrolTests
         {
             private IChargeControl _chargeControl;
             private ChargeControl uut;
@@ -30,7 +30,7 @@ namespace Ladeskab_unit_test
             {
                
                 _chargeControl = Substitute.For<IChargeControl>();
-                _usbCharger = Substitute.For<IUsbCharger>();
+                _usbCharger = Substitute.For<UsbChargerSimulator>();
                 uut = Substitute.For<ChargeControl>();
                 _usbCharger.CurrentValueEvent += (o, args) => { _currentArgs = args; };
                 uut.ChargeDisplayEvent += (o, args) => { _chargeDisplayArgs = args; };
@@ -49,7 +49,22 @@ namespace Ladeskab_unit_test
             {
                 uut.connected = a;
                 uut.startCharge();
-                uut.Received(1).isConnected();
+                Assert.That(uut.isConnected(),Is.EqualTo(a));
+            }
+            [Test]
+            public void uut_startCharge_and_Connected_Test()
+            {
+                uut.connected = true;
+                uut.startCharge();
+                _usbCharger.Received(1).StartCharge();
+            }
+
+            [Test]
+            public void uut_startCharge_and_notConnected_test()
+            {
+                uut.connected = false;
+                uut.startCharge();
+                _usbCharger.Received(1).StopCharge();
             }
 
             [Test]
