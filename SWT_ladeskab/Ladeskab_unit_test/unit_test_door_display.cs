@@ -100,7 +100,7 @@ namespace Ladeskab_unit_test
 
 
             [Test]
-            public void check()
+            public void check_EventFired()
             {
                 _receivedDoorArgs = null;
                 _door = new Door();
@@ -116,6 +116,24 @@ namespace Ladeskab_unit_test
                 Assert.That(_receivedDoorArgs, Is.Not.Null);
 
                 }
+
+            [Test]
+            public void check_OpenDoorStringReceived()
+            {
+                _receivedDoorArgs = null;
+                _door = new Door();
+                _door.open();
+
+                _door.OpenDoorEvent +=
+                    (o, args) =>
+                    {
+                        _receivedDoorArgs = args;
+                    };
+
+                _door.open();
+                Assert.AreEqual(_receivedDoorArgs.DoorOpen, "Im open");
+
+            }
 
         }
 
