@@ -12,11 +12,10 @@ namespace SWT_ladeskab
 
         public event EventHandler<RfidDetectedEventArgs> RfidDetectedEvent;
 
-        public void onRfidDetectedEvent()
+        public void onRfidDetectedEvent(int RfidId)
         {
-            Console.WriteLine("Indtast RFID id: ");
-                int detectedId = int.Parse(Console.ReadLine());
-            RfidDetectedEvent?.Invoke(this,new RfidDetectedEventArgs(){id = detectedId});
+            RfidDetectedEvent?.Invoke(this,new RfidDetectedEventArgs(){id = RfidId});
         }
+
     }
 }

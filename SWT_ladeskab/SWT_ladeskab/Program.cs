@@ -44,11 +44,11 @@ class Program
 
                 case 'R':
                 case 'r':
-                   /* System.Console.WriteLine("Indtast RFID id: ");
+                    System.Console.WriteLine("Indtast RFID id: ");
                     string idString = System.Console.ReadLine();
 
-                    int id = Convert.ToInt32(idString);*/
-                    rfidReader.onRfidDetectedEvent();
+                    int id = Convert.ToInt32(idString);
+                    rfidReader.onRfidDetectedEvent(id);
                    break;
 
                 default:

@@ -9,7 +9,7 @@ namespace SWT_ladeskab
     public interface IRFIDReader
     {
         event EventHandler<RfidDetectedEventArgs> RfidDetectedEvent;
-        void onRfidDetectedEvent();
+        void onRfidDetectedEvent(int RfidId);
     }
 
     public class RfidDetectedEventArgs : EventArgs

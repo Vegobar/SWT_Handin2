@@ -44,16 +44,16 @@ namespace SWT_ladeskab
 
         }
 
-        public void LogDoorLocked(int id_rfid)
-        {
-            throw new NotImplementedException();
-        }
+        //public void LogDoorLocked(int id_rfid)
+        //{
+        //   throw new NotImplementedException();
+        //}
 
         public bool CheckId(int OldID_rfid, int id_rfid)
         {
             if (OldID_rfid == id_rfid)
                 return true;
-            else
+                else
                 return false;
         }
 
