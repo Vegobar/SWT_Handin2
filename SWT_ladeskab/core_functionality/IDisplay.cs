@@ -8,6 +8,8 @@ namespace SWT_ladeskab
 {
     public interface IDisplay
     {
-         void display(string text, int display_num);
+        string ReceivedString { get; set; }
+
+        void display(string text, int display_num);
     }
 }

@@ -10,6 +10,7 @@ namespace SWT_ladeskab
     {
         private string _userString = "";
         private string _chargeString = "";
+        private string _receivedString = "";
 
         UserDisplay _uDisplay = new UserDisplay();
         chargeDisplay _cDisplay = new chargeDisplay();
@@ -20,6 +21,7 @@ namespace SWT_ladeskab
             {
                 case 1:
                     _userString = text1;
+                    _receivedString = text1;
                     Console.WriteLine("**************************************");
                     _uDisplay.displayText(_userString);
                     Console.WriteLine("**************************************");
@@ -33,6 +35,7 @@ namespace SWT_ladeskab
                     if (string.Compare(_chargeString, text1) != 0)
                     {
                         _chargeString = text1;
+                        _receivedString = text1;
                         Console.WriteLine("**************************************");
                         _uDisplay.displayText(_userString);
                         Console.WriteLine("**************************************");
@@ -43,6 +46,13 @@ namespace SWT_ladeskab
 
                     break;
             }
+        }
+
+   
+        public string ReceivedString
+        {
+            get { return _receivedString; }
+            set { _receivedString = value; }
         }
     }
 }

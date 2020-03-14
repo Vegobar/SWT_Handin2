@@ -20,7 +20,7 @@ namespace Ladeskab_unit_test
 
             private IStationControl _stationControl;
             private IDoor _door;
-            private IDisplay _display = Substitute.For<Display>();
+            private IDisplay _display;
             private IChargeControl _chargeControl = Substitute.For<ChargeControl>();
             private IRFIDReader _rfidReader = Substitute.For<RFIDReader>();
             private OpenDoorEventArgs _receivedDoorArgs;
@@ -181,36 +181,50 @@ namespace Ladeskab_unit_test
             public void testDisplayOpenDoor()
             {
                 _door = new Door();
+                _display = new Display();
+
                 _stationControl = Substitute.For<StationControl>(_door, _display, _rfidReader, _chargeControl);
 
                 _door.open();
 
-                _display.Received(1).display("Tilslut telefon", 1);
+                Assert.That(_display.ReceivedString, Is.EqualTo("Tilslut telefon"));
             }
 
             [Test]
             public void testDisplayCloseDoor()
             {
-                _door = new Door();
+                //Arrange
+                _door = Substitute.For<IDoor>();
+                _display =new Display();
                 _stationControl = Substitute.For<StationControl>(_door, _display, _rfidReader, _chargeControl);
-                _door.close();
-                _display.Received(1).display("Skabet er låst og din telefon lades. Brug dit RFID tag til at låse op.", 1);
+
+                //Act
+                _stationControl.RfidDetected(123);
+
+                //Assert
+                Assert.That(_display.ReceivedString, Is.EqualTo("Skabet er låst og din telefon lades. Brug dit RFID tag til at låse op."));
             }
 
             [Test]
-            public void testDisplay_takePhoneOut()
+            public void testDisplay_wrongTag()
             {
-                //_display = new Display();
                 _door = Substitute.For<IDoor>();
+                _display = new Display();
                 _stationControl = Substitute.For<StationControl>(_door, _display, _rfidReader, _chargeControl);
 
                 _door.open();
                 _rfidReader.onRfidDetectedEvent(123);
                 _rfidReader.onRfidDetectedEvent(125);
 
-                _display.Received(1).display("Forkert RFID tag", 1);
+                Assert.That(_display.ReceivedString, Is.EqualTo("Forkert RFID tag"));
             }
 
+            [Test]
+            public void testDisplay()
+            {
+                
+
+            }
         }
 
     }
