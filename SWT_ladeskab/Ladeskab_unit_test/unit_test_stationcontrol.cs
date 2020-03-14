@@ -72,6 +72,32 @@ namespace Ladeskab_unit_test
                     1);
                 _display.Received(1).display("Tag din telefon ud af skabet og luk døren", 1);
             }
+            
+            [Test]
+            public void test_LadeSkabsStateLocked_false_id_connected_false()
+            {
+                _chargeControl.isConnected().Returns(false);
+
+                _rfidReader.RfidDetectedEvent += Raise.EventWith(new RfidDetectedEventArgs {id = 123});
+                _rfidReader.RfidDetectedEvent += Raise.EventWith(new RfidDetectedEventArgs {id = 123});
+
+                _display.Received(2).display("Din telefon er ikke ordentlig tilsluttet. Prøv igen",
+                    1);
+            }
+            
+            [Test]
+            public void test_LadeSkabsStateLocked_false_id_connected_false_thenAfter_true()
+            {
+                _chargeControl.isConnected().Returns(false);
+
+                _rfidReader.RfidDetectedEvent += Raise.EventWith(new RfidDetectedEventArgs {id = 123});
+                _chargeControl.isConnected().Returns(true);
+                _rfidReader.RfidDetectedEvent += Raise.EventWith(new RfidDetectedEventArgs {id = 123});
+
+                _display.Received(1).display("Din telefon er ikke ordentlig tilsluttet. Prøv igen",
+                    1);
+                _display.Received(1).display("Skabet er låst og din telefon lades. Brug dit RFID tag til at låse op.", 1);
+            }
 
             [Test]
             public void testCheckID_false()
