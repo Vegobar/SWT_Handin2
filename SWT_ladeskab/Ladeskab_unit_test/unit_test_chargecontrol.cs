@@ -59,14 +59,42 @@ namespace Ladeskab_unit_test
                 _usbCharger.ReceivedCalls();
             }
 
-            [TestCase(0, "")]
-            [TestCase(3, "Phone fully charged.")]
-            [TestCase(200, "Phone charging.")]
-            [TestCase(501, "Warning: short circuit, disabling charge mode")]
-            public void uut_chargeDisplay_test(double a, string b)
+            [TestCase(0)]
+            public void uut_chargeDisplay_NotConnected_test(double a)
             {
                 uut.updateDisplayPower(a);
-                Assert.That(_chargeDisplayArgs.msg == b);
+                Assert.That(_chargeDisplayArgs.msg == "");
+            }
+            
+            [TestCase(1)]
+            [TestCase(2)]
+            [TestCase(3)]
+            [TestCase(5)]
+            public void uut_chargeDisplay_doneCharging_test(double a)
+            {
+                uut.updateDisplayPower(a);
+                Assert.That(_chargeDisplayArgs.msg == "Phone fully charged.");
+            }
+
+            [TestCase(6)]
+            [TestCase(50)]
+            [TestCase(100)]
+            [TestCase(200)]
+            [TestCase(400)]
+            [TestCase(500)]
+            public void uut_chargeDisplay_isCharging_test(double a)
+            {
+                uut.updateDisplayPower(a);
+                Assert.That(_chargeDisplayArgs.msg == "Phone charging.");
+            }
+
+            [TestCase(501)]
+            [TestCase(550)]
+            [TestCase(1000)]
+            public void uut_chargeDisplay_Overloaded_test(double a)
+            {
+                uut.updateDisplayPower(a);
+                Assert.That(_chargeDisplayArgs.msg == "Warning: short circuit, disabling charge mode");
             }
 
         }
