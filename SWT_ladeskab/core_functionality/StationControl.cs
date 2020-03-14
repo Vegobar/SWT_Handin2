@@ -25,10 +25,26 @@ namespace SWT_ladeskab
         private IDoor _door;
         private IDisplay _display;
         private IRFIDReader _rfid;
-        private ILog _log = new Log();
+        private ILog _log;
         
         private int _oldId;
 
+        public StationControl(IDoor door, IDisplay display, IRFIDReader rfid,IChargeControl chargeControl,ILog log)
+        {
+            _display = display;
+            _door = door;
+            _rfid = rfid;
+            _chargeControl = chargeControl;
+            _log = log;
+
+            //Events
+            _door.OpenDoorEvent += OpenDoorEventHandler;
+            _door.ClosedDoorEvent += CloseDoorEventHandler;
+            _rfid.RfidDetectedEvent += RfidDetectedEventHandler;
+            _chargeControl.ChargeDisplayEvent += ChargeDisplayEventHandler;
+
+        }
+        
         public StationControl(IDoor door, IDisplay display, IRFIDReader rfid,IChargeControl chargeControl)
         {
             _display = display;

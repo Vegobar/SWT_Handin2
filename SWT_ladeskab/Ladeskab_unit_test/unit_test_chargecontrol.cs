@@ -43,9 +43,11 @@ namespace Ladeskab_unit_test
                 uut.Received(1).updateDisplayPower(uut.CurrentCharge);
             }
 
-            [Test]
-            public void uut_isConnected_test()
+            [TestCase(false)]
+            [TestCase(true)]
+            public void uut_isConnected_test(bool a)
             {
+                uut.connected = a;
                 uut.startCharge();
                 uut.Received(1).isConnected();
             }
@@ -55,6 +57,16 @@ namespace Ladeskab_unit_test
             {
                 uut.stopCharge();
                 _usbCharger.ReceivedCalls();
+            }
+
+            [TestCase(0, "")]
+            [TestCase(3, "Phone fully charged.")]
+            [TestCase(200, "Phone charging.")]
+            [TestCase(501, "Warning: short circuit, disabling charge mode")]
+            public void uut_chargeDisplay_test(double a, string b)
+            {
+                uut.updateDisplayPower(a);
+                Assert.That(_chargeDisplayArgs.msg == b);
             }
 
         }
