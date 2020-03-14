@@ -82,6 +82,44 @@ namespace Ladeskab_unit_test
                 
                 _display.Received(1).display("Skabet er låst og din telefon lades. Brug dit RFID tag til at låse op.",1);
             }
+
+            [Test]
+            public void test_conncted_phone_false()
+            {
+                _chargeControl.isConnected().Returns(true);
+
+                _rfidReader.RfidDetectedEvent += Raise.EventWith(new RfidDetectedEventArgs());
+                
+                _display.Received(1).display("Forkert RFID tag",1);
+            }
+
+            [Test]
+            public void test_LadeSkabsStateLocked_true_id()
+            {
+                _chargeControl.isConnected().Returns(true);
+
+                _rfidReader.RfidDetectedEvent += Raise.EventWith(new RfidDetectedEventArgs(){id = 123});
+                _rfidReader.RfidDetectedEvent += Raise.EventWith(new RfidDetectedEventArgs(){id = 123});
+
+                _display.Received(1).display("Skabet er låst og din telefon lades. Brug dit RFID tag til at låse op.",1);
+                _display.Received(1).display("Tag din telefon ud af skabet og luk døren",1);
+                
+            }
+            
+            [Test]
+            public void test_LadeSkabsStateLocked_false_id()
+            {
+                _chargeControl.isConnected().Returns(true);
+
+                _rfidReader.RfidDetectedEvent += Raise.EventWith(new RfidDetectedEventArgs(){id = 123});
+                _rfidReader.RfidDetectedEvent += Raise.EventWith(new RfidDetectedEventArgs(){id = 124});
+
+                _display.Received(1).display("Skabet er låst og din telefon lades. Brug dit RFID tag til at låse op.",1);
+                _display.Received(1).display("Forkert RFID tag",1);
+                
+            }
+            
+            
         }
     }
 }
