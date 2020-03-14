@@ -24,6 +24,7 @@ namespace Ladeskab_unit_test
             private IChargeControl _chargeControl = Substitute.For<ChargeControl>();
             private IRFIDReader _rfidReader = Substitute.For<RFIDReader>();
             private OpenDoorEventArgs _receivedDoorArgs;
+            private ClosedDoorEventArgs _receivedClosedDoorArgs;
 
 
             [Test]
@@ -100,11 +101,11 @@ namespace Ladeskab_unit_test
 
 
             [Test]
-            public void check_EventFired()
+            public void check_EventFiredOpenDoor()
             {
+                //Arrange
                 _receivedDoorArgs = null;
                 _door = new Door();
-                _door.open();
 
                 _door.OpenDoorEvent +=
                     (o, args) =>
@@ -112,7 +113,11 @@ namespace Ladeskab_unit_test
                         _receivedDoorArgs = args;
                     };
 
+
+                //Act
                 _door.open();
+
+                //Assert
                 Assert.That(_receivedDoorArgs, Is.Not.Null);
 
                 }
@@ -120,9 +125,9 @@ namespace Ladeskab_unit_test
             [Test]
             public void check_OpenDoorStringReceived()
             {
+                //Arrange 
                 _receivedDoorArgs = null;
                 _door = new Door();
-                _door.open();
 
                 _door.OpenDoorEvent +=
                     (o, args) =>
@@ -130,10 +135,59 @@ namespace Ladeskab_unit_test
                         _receivedDoorArgs = args;
                     };
 
+                //Act
                 _door.open();
-                Assert.AreEqual(_receivedDoorArgs.DoorOpen, "Im open");
+
+                //Assert
+                Assert.AreEqual(_receivedDoorArgs.DoorOpen, "Door is open");
 
             }
+
+
+            [Test]
+            public void check_EventFiredCloseDoor()
+            {
+                //Arrange
+                _receivedClosedDoorArgs = null;
+                _door = new Door();
+
+                _door.ClosedDoorEvent +=
+                    (o, args) =>
+                    {
+                        _receivedClosedDoorArgs = args;
+                    };
+
+
+                //Act
+                _door.close();
+
+                //Assert
+                Assert.That(_receivedClosedDoorArgs, Is.Not.Null);
+
+            }
+
+            [Test]
+            public void ClosedDoorStringReceived()
+            {
+                //Arrange
+                _receivedClosedDoorArgs = null;
+                _door = new Door();
+
+                _door.ClosedDoorEvent +=
+                    (o, args) =>
+                    {
+                        _receivedClosedDoorArgs = args;
+                    };
+
+
+                //Act
+                _door.close();
+
+                //Assert
+                Assert.AreEqual(_receivedClosedDoorArgs.DoorClosed, "Door is closed");
+
+            }
+
 
         }
 

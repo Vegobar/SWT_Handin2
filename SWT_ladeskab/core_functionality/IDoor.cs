@@ -24,6 +24,6 @@ namespace SWT_ladeskab
 
      public class ClosedDoorEventArgs : EventArgs
         {
-
+             public string DoorClosed { get; set; }
         }
 }
