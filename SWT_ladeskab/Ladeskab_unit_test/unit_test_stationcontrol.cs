@@ -16,7 +16,7 @@ namespace Ladeskab_unit_test
         class Sub_tester
         {
 
-            private IStationControl _stationControl;
+            private StationControl _stationControl;
             private IRFIDReader _rfidReader;
             private IChargeControl _chargeControl;
             private IDoor _door;
@@ -26,7 +26,6 @@ namespace Ladeskab_unit_test
             [SetUp]
             public void Setup()
             {
-                _stationControl = Substitute.For<IStationControl>();
                 _rfidReader = Substitute.For<IRFIDReader>();
                 _chargeControl = Substitute.For<IChargeControl>();
                 _door = Substitute.For<IDoor>();
@@ -39,15 +38,32 @@ namespace Ladeskab_unit_test
             public void testDoorOpenEventHandler()
             {
                 _door.OpenDoorEvent += Raise.EventWith(new OpenDoorEventArgs());
-                //_display.Received(1).display("Tilslut telefon");
+                _display.Received(1).display("Tilslut telefon",1);
             }
 
             [Test]
             public void testCloseOpenEventHandler()
             {
                 _door.ClosedDoorEvent += Raise.EventWith(new ClosedDoorEventArgs());
-               //_display.Received(1).display("Indlæs RFID");
+                _display.Received(1).display("Indlæs RFID",1);
             }
+
+            [Test]
+            public void testCheckID_true()
+            {
+                var result = _stationControl.CheckId(30, 30);
+                Assert.IsTrue(result);
+            }
+            
+            [Test]
+            public void testCheckID_false()
+            {
+                var result = _stationControl.CheckId(30, 35);
+                Assert.IsFalse(result);
+            }
+            
+            
+            
         }
     }
 }
