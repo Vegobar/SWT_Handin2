@@ -72,6 +72,16 @@ namespace Ladeskab_unit_test
                 _rfidReader.RfidDetectedEvent += Raise.EventWith(new RfidDetectedEventArgs());
                 Assert.True(wasCalled);
             }
+
+            [Test]
+            public void test_connected_phone_true()
+            {
+                _chargeControl.isConnected().Returns(true);
+
+                _rfidReader.RfidDetectedEvent += Raise.EventWith(new RfidDetectedEventArgs());
+                
+                _display.Received(1).display("Skabet er låst og din telefon lades. Brug dit RFID tag til at låse op.",1);
+            }
         }
     }
 }
