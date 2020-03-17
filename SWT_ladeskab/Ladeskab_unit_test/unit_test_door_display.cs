@@ -252,7 +252,8 @@ namespace Ladeskab_unit_test
 
                 _door.close();
                 _rfidReader.onRfidDetectedEvent(123);
-                _chargeControl.CurrentCharge = 20;
+                _chargeControl.stopCharge();
+                _chargeControl.startCharge();
 
                 Assert.That(_display.ReceivedString, Is.EqualTo("Phone charging."));
             }
