@@ -246,21 +246,17 @@ namespace Ladeskab_unit_test
             {
                 //Arrange
                 _door = Substitute.For<IDoor>();
-                _chargeControl = Substitute.For<ChargeControl>();
+                _chargeControl = Substitute.For<IChargeControl>();
                 _display = new Display();
                 _stationControl = Substitute.For<StationControl>(_door, _display, _rfidReader, _chargeControl);
 
+                _door.open();
+                _rfidReader.onRfidDetectedEvent(123);
                 _chargeControl.CurrentCharge = 20;
-
-
-
+                
+                Assert.That(_display.ReceivedString, Is.EqualTo("Din telefon er ikke ordentlig tilsluttet. Prøv igen"));
             }
 
-            private void ChargeDisplayEventHandler(object sender, ChargeDisplayEventArgs e)
-            {
-
-                _display.display(e.msg, 2);
-            }
         }
 
     }
