@@ -15,6 +15,8 @@ namespace SWT_ladeskab
         bool isConnected();
         void startCharge();
         void stopCharge();
+
+        double CurrentCharge { get; set; }
     }
 
     public class ChargeDisplayEventArgs : EventArgs
