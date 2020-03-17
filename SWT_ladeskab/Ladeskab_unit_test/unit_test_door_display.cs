@@ -245,17 +245,18 @@ namespace Ladeskab_unit_test
             public void testChargeDisplay()
             {
                 //Arrange
-                _door = Substitute.For<IDoor>();
-                _chargeControl = Substitute.For<IChargeControl>();
+                _door = Substitute.For<Door>();
+                _chargeControl = Substitute.For<ChargeControl>();
                 _display = new Display();
                 _stationControl = Substitute.For<StationControl>(_door, _display, _rfidReader, _chargeControl);
 
-                _door.open();
+                _door.close();
                 _rfidReader.onRfidDetectedEvent(123);
                 _chargeControl.CurrentCharge = 20;
-                
-                Assert.That(_display.ReceivedString, Is.EqualTo("Din telefon er ikke ordentlig tilsluttet. Prøv igen"));
+
+                Assert.That(_display.ReceivedString, Is.EqualTo("Phone charging."));
             }
+
 
         }
 
