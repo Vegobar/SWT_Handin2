@@ -32,10 +32,7 @@ namespace Ladeskab_unit_test
             }
 
             //Test in this region is a bit better... Maybe.
-
-            #region All test cases:
-
-            #region Test for switch case avaiable & locked
+            //Missing tests for received charge calls
 
             [Test]
             public void test_LadeSkabsStateLocked_false_id_connected_false()
@@ -152,17 +149,8 @@ namespace Ladeskab_unit_test
                 _log.Received(1).PrintToFile(": Skab låst med RFID: ", 123);
                 _log.Received(1).PrintToFile(": Skab låst op med RFID: ", 123);
             }
-
-            #endregion
-
-
-            #region Tests for connected = false & true
-
-            #endregion
-
-            #endregion
-
-
+            
+            
             //Tests under this are not done yet. 
 
             [Test]
@@ -185,7 +173,7 @@ namespace Ladeskab_unit_test
                 _display.Received(1).display("Skabet er låst og din telefon lades. Brug dit RFID tag til at låse op.",
                     1);
             }
-
+    
 
             [Test]
             public void test_LadeSkabsStateLocked_false_id_connected_false_thenAfter_true()
