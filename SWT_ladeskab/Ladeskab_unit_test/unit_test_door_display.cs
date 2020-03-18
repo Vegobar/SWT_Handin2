@@ -286,15 +286,17 @@ namespace Ladeskab_unit_test
                 _display = new Display();
                 _stationControl = Substitute.For<StationControl>(_door, _display, _rfidReader, _chargeControl);
 
+                //Act
                 _door.close();
                 _rfidReader.onRfidDetectedEvent(123);
                 _chargeControl.stopCharge();
                 _chargeControl.startCharge();
 
+
+                //Assert
                 Assert.That(_display.ReceivedString, Is.EqualTo("Phone charging."));
             }
 
         }
-
     }
 }
