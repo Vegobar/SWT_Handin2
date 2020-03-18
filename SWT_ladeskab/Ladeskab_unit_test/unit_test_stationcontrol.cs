@@ -224,7 +224,7 @@ namespace Ladeskab_unit_test
                 var wasCalled = false;
                 _rfidReader.RfidDetectedEvent += (sender, args) => wasCalled = true;
 
-                _rfidReader.RfidDetectedEvent += Raise.EventWith(new RfidDetectedEventArgs());
+                _rfidReader.RfidDetectedEvent += Raise.EventWith(new RfidDetectedEventArgs {id = 123});
                 Assert.True(wasCalled);
             }
 
