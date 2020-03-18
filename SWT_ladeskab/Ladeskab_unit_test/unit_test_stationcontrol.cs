@@ -203,7 +203,21 @@ namespace Ladeskab_unit_test
                 var result = _stationControl.CheckId(30, 30);
                 Assert.IsTrue(result);
             }
-
+            
+            [Test]
+            public void testCheckID_true_negative()
+            {
+                var result = _stationControl.CheckId(-30, -30);
+                Assert.IsTrue(result);
+            }
+            
+            [Test]
+            public void testCheckID_true_false_negative()
+            {
+                var result = _stationControl.CheckId(-30, -35);
+                Assert.IsFalse(result);
+            }
+            
             [Test]
             public void testCloseOpenEventHandler()
             {
