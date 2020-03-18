@@ -163,6 +163,7 @@ namespace Ladeskab_unit_test
                 //Arrange
                 _receivedClosedDoorArgs = null;
                 _door = new Door();
+                _door.open();
 
                 _door.ClosedDoorEvent +=
                     (o, args) =>
