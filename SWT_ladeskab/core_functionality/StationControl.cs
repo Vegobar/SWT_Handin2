@@ -60,10 +60,6 @@ namespace SWT_ladeskab
 
         }
 
-        //public void LogDoorLocked(int id_rfid)
-        //{
-        //   throw new NotImplementedException();
-        //}
 
         public bool CheckId(int OldID_rfid, int id_rfid)
         {
@@ -96,8 +92,8 @@ namespace SWT_ladeskab
                    
                     break;
 
-               // case LadeSkabsState.DoorOpen:
-                    //break;
+                case LadeSkabsState.DoorOpen:
+                    break;
 
                 case LadeSkabsState.Available:
                     if (_chargeControl.isConnected())

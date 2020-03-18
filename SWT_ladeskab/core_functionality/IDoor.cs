@@ -13,6 +13,8 @@ namespace SWT_ladeskab
         void lockDoor();
         void unlockDoor();
 
+        int getDoorState();
+
         event EventHandler<OpenDoorEventArgs> OpenDoorEvent;
         event EventHandler<ClosedDoorEventArgs> ClosedDoorEvent;
     }
