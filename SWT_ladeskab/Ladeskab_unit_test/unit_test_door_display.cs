@@ -29,6 +29,42 @@ namespace Ladeskab_unit_test
 
 
             [Test]
+            public void getDoorStateOpen()
+            {
+                _door = new Door();
+                _door.close();
+                _door.unlockDoor();
+                _door.open();
+                Assert.That(_door.getDoorState(), Is.EqualTo(1));
+            }
+
+            [Test]
+            public void getDoorStateClosed()
+            {
+                _door = new Door();
+                _door.close();
+                Assert.That(_door.getDoorState(), Is.EqualTo(0));
+            }
+
+            [Test]
+            public void getDoorStatusOnOpenedDoor()
+            {
+                _door = new Door();
+                _door.open();
+                _door.open();
+                Assert.That(_door.getDoorState(), Is.EqualTo(1));
+            }
+
+            [Test]
+            public void getDoorStatusOnClosedDoor()
+            {
+                _door = new Door();
+                _door.close();
+                _door.close();
+                Assert.That(_door.getDoorState(), Is.EqualTo(0));
+            }
+
+            [Test]
              public void testingOpenDoorInvokation()
              {
                 //Arrange
@@ -139,7 +175,7 @@ namespace Ladeskab_unit_test
                 //Arrange
                 _receivedClosedDoorArgs = null;
                 _door = new Door();
-
+                _door.open();
                 _door.ClosedDoorEvent +=
                     (o, args) =>
                     {
@@ -161,7 +197,7 @@ namespace Ladeskab_unit_test
                 //Arrange
                 _receivedClosedDoorArgs = null;
                 _door = new Door();
-
+                _door.open();
                 _door.ClosedDoorEvent +=
                     (o, args) =>
                     {
@@ -257,7 +293,6 @@ namespace Ladeskab_unit_test
 
                 Assert.That(_display.ReceivedString, Is.EqualTo("Phone charging."));
             }
-
 
         }
 

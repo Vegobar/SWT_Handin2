@@ -60,5 +60,8 @@
     <Compile Include="UsbChargerSimulator.cs" />
     <Compile Include="UserDisplay.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram1.cd" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

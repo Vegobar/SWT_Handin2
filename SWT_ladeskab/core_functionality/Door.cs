@@ -34,23 +34,23 @@ namespace SWT_ladeskab
 
         public int getDoorState()
         {
+
             if (_state == doorState.Open)
             {
                 return 1;
             }
 
-            if (_state == doorState.Closed)
+            else
             {
                 return 0;
             }
-            else return 0;
         }
         public void open()
         {
             if (!_isLocked && _state != doorState.Open)
             {
-                OnDoorOpenEvent(new OpenDoorEventArgs {DoorOpen = "Door is open"});
                 _state = doorState.Open;
+                OnDoorOpenEvent(new OpenDoorEventArgs {DoorOpen = "Door is open"});
             }
             else if(_isLocked)
             {
@@ -66,8 +66,8 @@ namespace SWT_ladeskab
         {
             if (_state != doorState.Closed)
             {
-                OnClosedDoorEvent(new ClosedDoorEventArgs {DoorClosed = "Door is closed"});
                 _state = doorState.Closed;
+                OnClosedDoorEvent(new ClosedDoorEventArgs {DoorClosed = "Door is closed"});
             }
             else if(_state == doorState.Closed)
             {
