@@ -31,9 +31,6 @@ namespace Ladeskab_unit_test
                 _stationControl = new StationControl(_door, _display, _rfidReader, _chargeControl, _log);
             }
 
-            //Test in this region is a bit better... Maybe.
-            //Missing tests for received charge calls
-
             [Test]
             public void test_LadeSkabsStateLocked_false_id_connected_false()
             {
@@ -149,9 +146,6 @@ namespace Ladeskab_unit_test
                 _log.Received(1).PrintToFile(": Skab låst med RFID: ", 123);
                 _log.Received(1).PrintToFile(": Skab låst op med RFID: ", 123);
             }
-            
-            
-            //Tests under this are not done yet. 
 
             [Test]
             public void test_conncted_phone_false()
