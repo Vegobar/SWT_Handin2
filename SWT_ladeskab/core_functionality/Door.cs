@@ -10,13 +10,15 @@ namespace SWT_ladeskab
     {
         private enum doorState
         {
-            Closed, Open
+            Closed,
+            Open
         };
 
 
-        private doorState _state {get; set; }
+        private doorState _state { get; set; }
 
         private bool _isLocked = false;
+
         public void lockDoor()
         {
             _isLocked = true;
@@ -27,24 +29,17 @@ namespace SWT_ladeskab
             _isLocked = false;
         }
 
-        public bool IsLocked
-        {
-            get { return _isLocked; }
-        }
+        public bool IsLocked => _isLocked;
 
         public int getDoorState()
         {
-
             if (_state == doorState.Open)
-            {
                 return 1;
-            }
 
             else
-            {
                 return 0;
-            }
         }
+
         public void open()
         {
             if (!_isLocked && _state != doorState.Open)
@@ -52,11 +47,11 @@ namespace SWT_ladeskab
                 _state = doorState.Open;
                 OnDoorOpenEvent(new OpenDoorEventArgs {DoorOpen = "Door is open"});
             }
-            else if(_isLocked)
+            else if (_isLocked)
             {
                 Console.WriteLine("Døren er låst");
             }
-            else if(!_isLocked && _state == doorState.Open)
+            else if (!_isLocked && _state == doorState.Open)
             {
                 Console.WriteLine("Døren er allerede åben" + "\n");
             }
@@ -69,7 +64,7 @@ namespace SWT_ladeskab
                 _state = doorState.Closed;
                 OnClosedDoorEvent(new ClosedDoorEventArgs {DoorClosed = "Door is closed"});
             }
-            else if(_state == doorState.Closed)
+            else if (_state == doorState.Closed)
             {
                 Console.Write("Døren er allerede lukket");
             }

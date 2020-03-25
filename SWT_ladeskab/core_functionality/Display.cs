@@ -12,8 +12,8 @@ namespace SWT_ladeskab
         private string _chargeString = "";
         private string _receivedString = "";
 
-        UserDisplay _uDisplay = new UserDisplay();
-        chargeDisplay _cDisplay = new chargeDisplay();
+        private UserDisplay _uDisplay = new UserDisplay();
+        private chargeDisplay _cDisplay = new chargeDisplay();
 
         public void display(string text1, int display_num)
         {
@@ -48,10 +48,7 @@ namespace SWT_ladeskab
             }
         }
 
-   
-        public string ReceivedString
-        {
-            get { return _receivedString; }
-        }
+
+        public string ReceivedString => _receivedString;
     }
 }

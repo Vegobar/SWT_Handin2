@@ -167,7 +167,7 @@ namespace Ladeskab_unit_test
                 _display.Received(1).display("Skabet er låst og din telefon lades. Brug dit RFID tag til at låse op.",
                     1);
             }
-    
+
 
             [Test]
             public void test_LadeSkabsStateLocked_false_id_connected_false_thenAfter_true()
@@ -197,21 +197,21 @@ namespace Ladeskab_unit_test
                 var result = _stationControl.CheckId(30, 30);
                 Assert.IsTrue(result);
             }
-            
+
             [Test]
             public void testCheckID_true_negative()
             {
                 var result = _stationControl.CheckId(-30, -30);
                 Assert.IsTrue(result);
             }
-            
+
             [Test]
             public void testCheckID_true_false_negative()
             {
                 var result = _stationControl.CheckId(-30, -35);
                 Assert.IsFalse(result);
             }
-            
+
             [Test]
             public void testCloseOpenEventHandler()
             {

@@ -11,11 +11,10 @@ using UsbSimulator;
 
 namespace SWT_ladeskab
 {
-
     public class ChargeControl : IChargeControl
     {
-        IUsbCharger Usb = new UsbChargerSimulator();
-        IDisplay chargeDisplay = new Display();
+        private IUsbCharger Usb = new UsbChargerSimulator();
+        private IDisplay chargeDisplay = new Display();
 
         public bool connected { get; set; }
         public double CurrentCharge { get; set; }
@@ -30,8 +29,7 @@ namespace SWT_ladeskab
 
         public void updateDisplayPower(double charge)
         {
-
-            string chargeState = "";
+            var chargeState = "";
             if (charge == 0.0)
             {
                 chargeState = "";
@@ -54,24 +52,20 @@ namespace SWT_ladeskab
 
             onChargeDisplayEvent(chargeState);
         }
-    
 
 
         public bool isConnected()
         {
             return connected;
         }
+
         //Requests UsbCharger to begin charging.
         public void startCharge()
         {
             if (connected)
-            {
                 Usb.StartCharge();
-            }
             else
-            {
                 Usb.StopCharge();
-            }
         }
 
         public void stopCharge()
@@ -91,10 +85,7 @@ namespace SWT_ladeskab
 
         private void onChargeDisplayEvent(string message)
         {
-            ChargeDisplayEvent?.Invoke(this, new ChargeDisplayEventArgs(){msg = message});
+            ChargeDisplayEvent?.Invoke(this, new ChargeDisplayEventArgs() {msg = message});
         }
     }
 }
-
-
-

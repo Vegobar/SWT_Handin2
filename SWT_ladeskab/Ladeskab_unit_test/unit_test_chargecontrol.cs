@@ -17,7 +17,7 @@ namespace Ladeskab_unit_test
     public class unit_test_chargecontrol
     {
         [TestFixture]
-        class ChargeConrolTests
+        private class ChargeConrolTests
         {
             private IChargeControl _chargeControl;
             private ChargeControl uut;
@@ -28,7 +28,6 @@ namespace Ladeskab_unit_test
             [SetUp]
             public void Setup()
             {
-               
                 _chargeControl = Substitute.For<IChargeControl>();
                 _usbCharger = Substitute.For<UsbChargerSimulator>();
                 uut = Substitute.For<ChargeControl>();
@@ -49,8 +48,9 @@ namespace Ladeskab_unit_test
             {
                 uut.connected = a;
                 uut.startCharge();
-                Assert.That(uut.isConnected(),Is.EqualTo(a));
+                Assert.That(uut.isConnected(), Is.EqualTo(a));
             }
+
             [Test]
             public void uut_startCharge_and_Connected_Test()
             {
@@ -80,7 +80,7 @@ namespace Ladeskab_unit_test
                 uut.updateDisplayPower(a);
                 Assert.That(_chargeDisplayArgs.msg == "");
             }
-            
+
             [TestCase(1)]
             [TestCase(2)]
             [TestCase(3)]
@@ -111,7 +111,6 @@ namespace Ladeskab_unit_test
                 uut.updateDisplayPower(a);
                 Assert.That(_chargeDisplayArgs.msg == "Warning: short circuit, disabling charge mode");
             }
-
         }
     }
 }

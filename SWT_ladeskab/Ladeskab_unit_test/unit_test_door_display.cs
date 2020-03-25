@@ -16,9 +16,8 @@ namespace Ladeskab_unit_test
     public class unit_test_door_display
     {
         [TestFixture]
-        class NUnit_test_door_display
+        private class NUnit_test_door_display
         {
-
             private IStationControl _stationControl;
             private IDoor _door;
             private IDisplay _display;
@@ -65,42 +64,42 @@ namespace Ladeskab_unit_test
             }
 
             [Test]
-             public void testingOpenDoorInvokation()
-             {
+            public void testingOpenDoorInvokation()
+            {
                 //Arrange
                 _door = Substitute.For<IDoor>();
                 _stationControl = new StationControl(_door, _display, _rfidReader, _chargeControl);
 
                 //Act
                 var wasCalled = false;
-                 _door.OpenDoorEvent += (sender, args) => wasCalled = true;
-                 _door.OpenDoorEvent += Raise.EventWith(new OpenDoorEventArgs());
+                _door.OpenDoorEvent += (sender, args) => wasCalled = true;
+                _door.OpenDoorEvent += Raise.EventWith(new OpenDoorEventArgs());
 
                 //Assert
-                 Assert.True(wasCalled);
-             }
+                Assert.True(wasCalled);
+            }
 
-             [Test]
-             public void testingCloseDoorInvokation()
-             {
+            [Test]
+            public void testingCloseDoorInvokation()
+            {
                 // Arrange
                 _door = Substitute.For<IDoor>();
                 _stationControl = new StationControl(_door, _display, _rfidReader, _chargeControl);
 
                 //Act
                 var wasCalledClose = false;
-                 _door.ClosedDoorEvent += (sender, args) => wasCalledClose = true;
-                 _door.ClosedDoorEvent += Raise.EventWith(new ClosedDoorEventArgs());
+                _door.ClosedDoorEvent += (sender, args) => wasCalledClose = true;
+                _door.ClosedDoorEvent += Raise.EventWith(new ClosedDoorEventArgs());
 
                 //Assert
-                 Assert.True(wasCalledClose);
-             }
+                Assert.True(wasCalledClose);
+            }
 
             [Test]
             public void testingDoorLocked()
             {
                 // Arrange
-                Door doorTest = new Door();
+                var doorTest = new Door();
                 _stationControl = Substitute.For<StationControl>(doorTest, _display, _rfidReader, _chargeControl);
 
                 // Act
@@ -114,7 +113,7 @@ namespace Ladeskab_unit_test
             public void testDoorUnlocked()
             {
                 //Arrange
-                Door doorTest = new Door();
+                var doorTest = new Door();
                 _stationControl = Substitute.For<StationControl>(doorTest, _display, _rfidReader, _chargeControl);
 
                 //Ac
@@ -122,9 +121,8 @@ namespace Ladeskab_unit_test
                 _stationControl.RfidDetected(123);
 
                 Assert.IsFalse(doorTest.IsLocked);
-
             }
-           
+
             [Test]
             public void check_EventFiredOpenDoor()
             {
@@ -133,10 +131,7 @@ namespace Ladeskab_unit_test
                 _door = new Door();
 
                 _door.OpenDoorEvent +=
-                    (o, args) =>
-                    {
-                        _receivedDoorArgs = args;
-                    };
+                    (o, args) => { _receivedDoorArgs = args; };
 
 
                 //Act
@@ -144,8 +139,7 @@ namespace Ladeskab_unit_test
 
                 //Assert
                 Assert.That(_receivedDoorArgs, Is.Not.Null);
-
-                }
+            }
 
             [Test]
             public void check_OpenDoorStringReceived()
@@ -155,17 +149,13 @@ namespace Ladeskab_unit_test
                 _door = new Door();
 
                 _door.OpenDoorEvent +=
-                    (o, args) =>
-                    {
-                        _receivedDoorArgs = args;
-                    };
+                    (o, args) => { _receivedDoorArgs = args; };
 
                 //Act
                 _door.open();
 
                 //Assert
                 Assert.AreEqual(_receivedDoorArgs.DoorOpen, "Door is open");
-
             }
 
 
@@ -177,10 +167,7 @@ namespace Ladeskab_unit_test
                 _door = new Door();
                 _door.open();
                 _door.ClosedDoorEvent +=
-                    (o, args) =>
-                    {
-                        _receivedClosedDoorArgs = args;
-                    };
+                    (o, args) => { _receivedClosedDoorArgs = args; };
 
 
                 //Act
@@ -188,7 +175,6 @@ namespace Ladeskab_unit_test
 
                 //Assert
                 Assert.That(_receivedClosedDoorArgs, Is.Not.Null);
-
             }
 
             [Test]
@@ -199,10 +185,7 @@ namespace Ladeskab_unit_test
                 _door = new Door();
                 _door.open();
                 _door.ClosedDoorEvent +=
-                    (o, args) =>
-                    {
-                        _receivedClosedDoorArgs = args;
-                    };
+                    (o, args) => { _receivedClosedDoorArgs = args; };
 
 
                 //Act
@@ -210,24 +193,22 @@ namespace Ladeskab_unit_test
 
                 //Assert
                 Assert.AreEqual(_receivedClosedDoorArgs.DoorClosed, "Door is closed");
-
             }
 
             [Test]
             public void OpenWhenCLocked()
             {
                 //Arrange
-                Door doorTest = new Door();
+                var doorTest = new Door();
                 _display = Substitute.For<IDisplay>();
                 _stationControl = Substitute.For<StationControl>(doorTest, _display, _rfidReader, _chargeControl);
-               
+
 
                 doorTest.lockDoor();
                 doorTest.open();
 
                 Assert.IsTrue(doorTest.IsLocked);
             }
-
 
 
             [Test]
@@ -250,14 +231,15 @@ namespace Ladeskab_unit_test
             {
                 //Arrange
                 _door = Substitute.For<IDoor>();
-                _display =new Display();
+                _display = new Display();
                 _stationControl = Substitute.For<StationControl>(_door, _display, _rfidReader, _chargeControl);
 
                 //Act
                 _stationControl.RfidDetected(123);
 
                 //Assert
-                Assert.That(_display.ReceivedString, Is.EqualTo("Skabet er låst og din telefon lades. Brug dit RFID tag til at låse op."));
+                Assert.That(_display.ReceivedString,
+                    Is.EqualTo("Skabet er låst og din telefon lades. Brug dit RFID tag til at låse op."));
             }
 
             [Test]
@@ -296,7 +278,6 @@ namespace Ladeskab_unit_test
                 //Assert
                 Assert.That(_display.ReceivedString, Is.EqualTo("Phone charging."));
             }
-
         }
     }
 }
