@@ -58,7 +58,7 @@ namespace SWT_ladeskab
             }
             else if(!_isLocked && _state == doorState.Open)
             {
-                Console.WriteLine("Døren er allerede åben");
+                Console.WriteLine("Døren er allerede åben" + "\n");
             }
         }
 
