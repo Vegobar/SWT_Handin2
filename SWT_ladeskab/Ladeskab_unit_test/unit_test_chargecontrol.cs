@@ -156,6 +156,20 @@ namespace Ladeskab_unit_test
                 _uut.updateDisplayPower(a);
                 _usbCharger.DidNotReceive().StopCharge();
             }
+
+            [TestCase(0,"")]
+            [TestCase(1, "Phone fully charged.")]
+            [TestCase(5, "Phone fully charged.")]
+            [TestCase(5.1, "Phone charging.")]
+            [TestCase(500, "Phone charging.")]
+            [TestCase(501, "Warning: short circuit, disabling charge mode")]
+            [TestCase(800, "Warning: short circuit, disabling charge mode")]
+            public void uut_chargeDisplay_full_event_path_test(double a, string msg)
+            {
+                _uut.CurrentCharge = 25.0;
+                _usbCharger.CurrentValueEvent += Raise.EventWith(new CurrentEventArgs() {Current = a});
+                Assert.That(_chargeDisplayArgs.msg == msg);
+            }
         }
     }
 }
