@@ -21,8 +21,8 @@ namespace Ladeskab_unit_test
             private IStationControl _stationControl;
             private Door _door;
             private IDisplay _display;
-            private IChargeControl _chargeControl = Substitute.For<ChargeControl>();
-            private IRFIDReader _rfidReader = Substitute.For<RFIDReader>();
+            private IChargeControl _chargeControl;
+            private IRFIDReader _rfidReader;
             private OpenDoorEventArgs _receivedDoorArgs;
             private ClosedDoorEventArgs _receivedClosedDoorArgs;
 
