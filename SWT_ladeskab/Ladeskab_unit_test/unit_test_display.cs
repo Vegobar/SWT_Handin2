@@ -22,19 +22,16 @@ namespace Ladeskab_unit_test
             private IDoor _door;
             private Display _display;
             private ILog _log;
-            private OpenDoorEventArgs _receivedDoorArgs;
-            private ClosedDoorEventArgs _receivedClosedDoorArgs;
 
             [SetUp]
             public void Setup()
             {
-                _rfidReader = Substitute.For<RFIDReader>();
-                _chargeControl = Substitute.For<ChargeControl>();
-                _door = Substitute.For<Door>();
+                _rfidReader = Substitute.For<IRFIDReader>();
+                _chargeControl = Substitute.For<IChargeControl>();
+                _door = Substitute.For<IDoor>();
                 _display = new Display();
-                _log = Substitute.For<ILog>();
 
-                _stationControl = Substitute.For<StationControl>(_door, _display, _rfidReader, _chargeControl, _log);
+                _stationControl = Substitute.For<StationControl>(_door, _display, _rfidReader, _chargeControl);
             }
 
 
@@ -53,6 +50,7 @@ namespace Ladeskab_unit_test
             [Test]
             public void testDisplayCloseDoor()
             {
+                //Act
                 _door.ClosedDoorEvent += Raise.EventWith(new ClosedDoorEventArgs { DoorClosed = "Door is closed" });
 
                 //Assert
@@ -63,11 +61,11 @@ namespace Ladeskab_unit_test
             [Test]
             public void testDisplayConnected()
             {
-                _door.open();
-                _chargeControl.startCharge();
-                _door.close();
-                _stationControl.RfidDetected(123);
-
+                //Act
+                _door.OpenDoorEvent += Raise.EventWith(new OpenDoorEventArgs { DoorOpen = "Door is open" });
+                _door.ClosedDoorEvent += Raise.EventWith(new ClosedDoorEventArgs { DoorClosed = "Door is closed" });
+                _chargeControl.isConnected().Returns(true);
+                _rfidReader.RfidDetectedEvent += Raise.EventWith(new RfidDetectedEventArgs { id = 123 });
 
                 //Assert
                 Assert.That(_display.ReceivedString, Is.EqualTo("Skabet er låst og din telefon lades. Brug dit RFID tag til at låse op."));
@@ -78,10 +76,11 @@ namespace Ladeskab_unit_test
             public void testDisplay_wrongTag()
             {
                 //Act
-                _door.open();
-                _door.close();
-                _rfidReader.onRfidDetectedEvent(123);
-                _rfidReader.onRfidDetectedEvent(125);
+                _door.OpenDoorEvent += Raise.EventWith(new OpenDoorEventArgs { DoorOpen = "Door is open" });
+                _door.ClosedDoorEvent += Raise.EventWith(new ClosedDoorEventArgs { DoorClosed = "Door is closed" });
+                _chargeControl.isConnected().Returns(true);
+                _rfidReader.RfidDetectedEvent += Raise.EventWith(new RfidDetectedEventArgs { id = 123 });
+                _rfidReader.RfidDetectedEvent += Raise.EventWith(new RfidDetectedEventArgs { id = 125 });
 
                 //Assert
                 Assert.That(_display.ReceivedString, Is.EqualTo("Forkert RFID tag"));
@@ -91,12 +90,11 @@ namespace Ladeskab_unit_test
             public void testChargeDisplay()
             {
                 //Act
-                _door.close();
-                _rfidReader.onRfidDetectedEvent(123);
-                _chargeControl.stopCharge();
-                _chargeControl.startCharge();
-
-
+                _door.OpenDoorEvent += Raise.EventWith(new OpenDoorEventArgs { DoorOpen = "Door is open" });
+                _door.ClosedDoorEvent += Raise.EventWith(new ClosedDoorEventArgs { DoorClosed = "Door is closed" });
+                _rfidReader.RfidDetectedEvent += Raise.EventWith(new RfidDetectedEventArgs { id = 123 });
+                _chargeControl.ChargeDisplayEvent += Raise.EventWith(new ChargeDisplayEventArgs { msg = "Phone charging." });
+         
                 //Assert
                 Assert.That(_display.ReceivedString, Is.EqualTo("Phone charging."));
             }
