@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SWT_ladeskab
 {
@@ -45,7 +41,7 @@ namespace SWT_ladeskab
             if (!_isLocked && _state != doorState.Open)
             {
                 _state = doorState.Open;
-                OnDoorOpenEvent(new OpenDoorEventArgs {DoorOpen = "Door is open"});
+                OnDoorOpenEvent(new OpenDoorEventArgs { DoorOpen = "Door is open" });
             }
             else if (_isLocked)
             {
@@ -62,7 +58,7 @@ namespace SWT_ladeskab
             if (_state != doorState.Closed)
             {
                 _state = doorState.Closed;
-                OnClosedDoorEvent(new ClosedDoorEventArgs {DoorClosed = "Door is closed"});
+                OnClosedDoorEvent(new ClosedDoorEventArgs { DoorClosed = "Door is closed" });
             }
             else if (_state == doorState.Closed)
             {

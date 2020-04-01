@@ -1,12 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics.Contracts;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
-using SWT_ladeskab;
 using UsbSimulator;
 
 namespace SWT_ladeskab
@@ -85,7 +77,7 @@ namespace SWT_ladeskab
 
         private void onChargeDisplayEvent(string message)
         {
-            ChargeDisplayEvent?.Invoke(this, new ChargeDisplayEventArgs() {msg = message});
+            ChargeDisplayEvent?.Invoke(this, new ChargeDisplayEventArgs() { msg = message });
         }
     }
 }

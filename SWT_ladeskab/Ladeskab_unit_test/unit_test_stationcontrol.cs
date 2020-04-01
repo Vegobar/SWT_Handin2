@@ -11,7 +11,7 @@ namespace Ladeskab_unit_test
         [TestFixture]
         private class Nunit_test_stationcontrol
         {
-            private StationControl _stationControl;
+            private StationControl _uut;
             private IRFIDReader _rfidReader;
             private IChargeControl _chargeControl;
             private IDoor _door;
@@ -28,7 +28,7 @@ namespace Ladeskab_unit_test
                 _display = Substitute.For<IDisplay>();
                 _log = Substitute.For<ILog>();
 
-                _stationControl = new StationControl(_door, _display, _rfidReader, _chargeControl, _log);
+                _uut = new StationControl(_door, _display, _rfidReader, _chargeControl, _log);
             }
 
             [Test]
@@ -187,28 +187,28 @@ namespace Ladeskab_unit_test
             [Test]
             public void testCheckID_false()
             {
-                var result = _stationControl.CheckId(30, 35);
+                var result = _uut.CheckId(30, 35);
                 Assert.IsFalse(result);
             }
 
             [Test]
             public void testCheckID_true()
             {
-                var result = _stationControl.CheckId(30, 30);
+                var result = _uut.CheckId(30, 30);
                 Assert.IsTrue(result);
             }
 
             [Test]
             public void testCheckID_true_negative()
             {
-                var result = _stationControl.CheckId(-30, -30);
+                var result = _uut.CheckId(-30, -30);
                 Assert.IsTrue(result);
             }
 
             [Test]
             public void testCheckID_true_false_negative()
             {
-                var result = _stationControl.CheckId(-30, -35);
+                var result = _uut.CheckId(-30, -35);
                 Assert.IsFalse(result);
             }
 

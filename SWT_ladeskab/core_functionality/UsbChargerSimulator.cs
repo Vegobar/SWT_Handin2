@@ -103,7 +103,7 @@ namespace UsbSimulator
 
         private void OnNewCurrent()
         {
-            CurrentValueEvent?.Invoke(this, new CurrentEventArgs() {Current = CurrentValue});
+            CurrentValueEvent?.Invoke(this, new CurrentEventArgs() { Current = CurrentValue });
         }
     }
 }
