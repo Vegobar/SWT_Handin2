@@ -61,7 +61,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="unit_test_chargecontrol.cs" />
-    <Compile Include="unit_test_door_display.cs" />
+    <Compile Include="unit_test_display.cs" />
+    <Compile Include="unit_test_door.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="unit_test_rfidreader.cs" />
     <Compile Include="unit_test_stationcontrol.cs" />

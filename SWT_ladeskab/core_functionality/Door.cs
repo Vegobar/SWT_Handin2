@@ -67,6 +67,7 @@ namespace SWT_ladeskab
             if (_state != doorState.Closed)
             {
                 _state = doorState.Closed;
+                _isLocked = true;
                 OnClosedDoorEvent(new ClosedDoorEventArgs {DoorClosed = "Door is closed"});
             }
             else if(_state == doorState.Closed)
