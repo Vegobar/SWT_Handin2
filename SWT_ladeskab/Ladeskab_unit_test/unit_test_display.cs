@@ -23,13 +23,14 @@ namespace Ladeskab_unit_test
             private Display _display;
             private ILog _log;
             private OpenDoorEventArgs _receivedDoorArgs;
+            private ClosedDoorEventArgs _receivedClosedDoorArgs;
 
             [SetUp]
             public void Setup()
             {
-                _rfidReader = Substitute.For<IRFIDReader>();
-                _chargeControl = Substitute.For<IChargeControl>();
-                _door = Substitute.For<IDoor>();
+                _rfidReader = Substitute.For<RFIDReader>();
+                _chargeControl = Substitute.For<ChargeControl>();
+                _door = Substitute.For<Door>();
                 _display = new Display();
                 _log = Substitute.For<ILog>();
 
@@ -42,7 +43,7 @@ namespace Ladeskab_unit_test
             {
 
                 //Act
-                _door.OpenDoorEvent += Raise.EventWith(new OpenDoorEventArgs());
+                 _door.OpenDoorEvent += Raise.EventWith(new OpenDoorEventArgs { DoorOpen = "Door is open"});
 
                 //Assert
                 Assert.That(_display.ReceivedString, Is.EqualTo("Tilslut telefon"));
@@ -52,18 +53,33 @@ namespace Ladeskab_unit_test
             [Test]
             public void testDisplayCloseDoor()
             {
-                //Act
+                _door.ClosedDoorEvent += Raise.EventWith(new ClosedDoorEventArgs { DoorClosed = "Door is closed" });
+
+                //Assert
+                Assert.That(_display.ReceivedString, Is.EqualTo("Indlæs RFID"));
+            }
+
+
+            [Test]
+            public void testDisplayConnected()
+            {
+                _door.open();
+                _chargeControl.startCharge();
+                _door.close();
                 _stationControl.RfidDetected(123);
+
 
                 //Assert
                 Assert.That(_display.ReceivedString, Is.EqualTo("Skabet er låst og din telefon lades. Brug dit RFID tag til at låse op."));
             }
+
 
             [Test]
             public void testDisplay_wrongTag()
             {
                 //Act
                 _door.open();
+                _door.close();
                 _rfidReader.onRfidDetectedEvent(123);
                 _rfidReader.onRfidDetectedEvent(125);
 
