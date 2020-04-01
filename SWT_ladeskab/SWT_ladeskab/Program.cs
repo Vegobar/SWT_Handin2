@@ -3,9 +3,9 @@ using core_functionality;
 using SWT_ladeskab;
 using UsbSimulator;
 
-class Program
+internal class Program
 {
-    static void Main(string[] args)
+    private static void Main(string[] args)
     {
         // Assemble your system here from all the classes
 
@@ -15,19 +15,19 @@ class Program
         IDisplay display = new Display();
         IChargeControl chargeControl = new ChargeControl();
 
-        IStationControl stationControl = new StationControl(door, display, rfidReader,chargeControl);
+        IStationControl stationControl = new StationControl(door, display, rfidReader, chargeControl);
 
-        bool finish = false;
+        var finish = false;
         do
         {
             string input;
-            System.Console.WriteLine("Indtast E, O, C, R: ");
+            Console.WriteLine("Indtast E, O, C, R: ");
             input = Console.ReadLine();
             if (string.IsNullOrEmpty(input)) continue;
 
             switch (input[0])
             {
-                case 'E': 
+                case 'E':
                 case 'e':
                     finish = true;
                     break;
@@ -46,15 +46,15 @@ class Program
                 case 'r':
                     if (door.getDoorState() == 0)
                     {
-                        System.Console.WriteLine("Indtast RFID id: ");
-                        string idString = System.Console.ReadLine();
-                        int id = Convert.ToInt32(idString);
+                        Console.WriteLine("Indtast RFID id: ");
+                        var idString = Console.ReadLine();
+                        var id = Convert.ToInt32(idString);
                         rfidReader.onRfidDetectedEvent(id);
                     }
                     else
                     {
                         {
-                            System.Console.WriteLine("Luk venligst døren");
+                            Console.WriteLine("Luk venligst døren");
                         }
                     }
 
@@ -63,7 +63,6 @@ class Program
                 default:
                     break;
             }
-
         } while (!finish);
     }
 }

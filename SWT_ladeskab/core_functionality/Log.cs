@@ -1,10 +1,5 @@
 ﻿using System;
 using System.IO;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace core_functionality
 {
@@ -12,9 +7,9 @@ namespace core_functionality
     {
         public void PrintToFile(string TextToPrint, int RFID_id)
         {
-            using (StreamWriter write = File.AppendText("log.txt"))
+            using (var write = File.AppendText("log.txt"))
             {
-                log(TextToPrint,RFID_id, write);
+                log(TextToPrint, RFID_id, write);
             }
         }
 

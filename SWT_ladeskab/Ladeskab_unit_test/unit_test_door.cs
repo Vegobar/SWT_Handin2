@@ -16,9 +16,8 @@ namespace Ladeskab_unit_test
     public class unit_test_door
     {
         [TestFixture]
-        class NUnit_test_door_display
+        private class NUnit_test_door_display
         {
-
             private IStationControl _stationControl;
             private Door _door;
             private IDisplay _display;
@@ -77,12 +76,12 @@ namespace Ladeskab_unit_test
 
                 //Act
                 var wasCalled = false;
-                 _door.OpenDoorEvent += (sender, args) => wasCalled = true;
-                 _door.OpenDoorEvent += Raise.EventWith(new OpenDoorEventArgs());
+                _door.OpenDoorEvent += (sender, args) => wasCalled = true;
+                _door.OpenDoorEvent += Raise.EventWith(new OpenDoorEventArgs());
 
                 //Assert
-                 Assert.True(wasCalled);
-             }
+                Assert.True(wasCalled);
+            }
 
              [Test]
              public void testingCloseDoorInvokation()
@@ -90,12 +89,12 @@ namespace Ladeskab_unit_test
  
                 //Act
                 var wasCalledClose = false;
-                 _door.ClosedDoorEvent += (sender, args) => wasCalledClose = true;
-                 _door.ClosedDoorEvent += Raise.EventWith(new ClosedDoorEventArgs());
+                _door.ClosedDoorEvent += (sender, args) => wasCalledClose = true;
+                _door.ClosedDoorEvent += Raise.EventWith(new ClosedDoorEventArgs());
 
                 //Assert
-                 Assert.True(wasCalledClose);
-             }
+                Assert.True(wasCalledClose);
+            }
 
             [Test]
             public void testingDoorLocked()
@@ -118,7 +117,7 @@ namespace Ladeskab_unit_test
                 Assert.IsFalse(_door.IsLocked);
 
             }
-           
+
             [Test]
             public void check_EventFiredOpenDoor()
             {
@@ -126,10 +125,7 @@ namespace Ladeskab_unit_test
                 _receivedDoorArgs = null;
 
                 _door.OpenDoorEvent +=
-                    (o, args) =>
-                    {
-                        _receivedDoorArgs = args;
-                    };
+                    (o, args) => { _receivedDoorArgs = args; };
 
 
                 //Act
@@ -137,8 +133,7 @@ namespace Ladeskab_unit_test
 
                 //Assert
                 Assert.That(_receivedDoorArgs, Is.Not.Null);
-
-                }
+            }
 
             [Test]
             public void check_OpenDoorStringReceived()
@@ -147,17 +142,13 @@ namespace Ladeskab_unit_test
                 _receivedDoorArgs = null;
 
                 _door.OpenDoorEvent +=
-                    (o, args) =>
-                    {
-                        _receivedDoorArgs = args;
-                    };
+                    (o, args) => { _receivedDoorArgs = args; };
 
                 //Act
                 _door.open();
 
                 //Assert
                 Assert.AreEqual(_receivedDoorArgs.DoorOpen, "Door is open");
-
             }
 
 
@@ -168,10 +159,7 @@ namespace Ladeskab_unit_test
                 _receivedClosedDoorArgs = null;
                 _door.open();
                 _door.ClosedDoorEvent +=
-                    (o, args) =>
-                    {
-                        _receivedClosedDoorArgs = args;
-                    };
+                    (o, args) => { _receivedClosedDoorArgs = args; };
 
 
                 //Act
@@ -179,7 +167,6 @@ namespace Ladeskab_unit_test
 
                 //Assert
                 Assert.That(_receivedClosedDoorArgs, Is.Not.Null);
-
             }
 
             [Test]
@@ -190,10 +177,7 @@ namespace Ladeskab_unit_test
 
                 _door.open();
                 _door.ClosedDoorEvent +=
-                    (o, args) =>
-                    {
-                        _receivedClosedDoorArgs = args;
-                    };
+                    (o, args) => { _receivedClosedDoorArgs = args; };
 
 
                 //Act
@@ -201,7 +185,6 @@ namespace Ladeskab_unit_test
 
                 //Assert
                 Assert.AreEqual(_receivedClosedDoorArgs.DoorClosed, "Door is closed");
-
             }
 
             [Test]

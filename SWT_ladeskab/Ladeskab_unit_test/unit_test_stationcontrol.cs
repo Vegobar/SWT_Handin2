@@ -11,7 +11,7 @@ namespace Ladeskab_unit_test
         [TestFixture]
         private class Nunit_test_stationcontrol
         {
-            private StationControl _stationControl;
+            private StationControl _uut;
             private IRFIDReader _rfidReader;
             private IChargeControl _chargeControl;
             private IDoor _door;
@@ -28,11 +28,8 @@ namespace Ladeskab_unit_test
                 _display = Substitute.For<IDisplay>();
                 _log = Substitute.For<ILog>();
 
-                _stationControl = new StationControl(_door, _display, _rfidReader, _chargeControl, _log);
+                _uut = new StationControl(_door, _display, _rfidReader, _chargeControl, _log);
             }
-
-            //Test in this region is a bit better... Maybe.
-            //Missing tests for received charge calls
 
             [Test]
             public void test_LadeSkabsStateLocked_false_id_connected_false()
@@ -149,9 +146,6 @@ namespace Ladeskab_unit_test
                 _log.Received(1).PrintToFile(": Skab låst med RFID: ", 123);
                 _log.Received(1).PrintToFile(": Skab låst op med RFID: ", 123);
             }
-            
-            
-            //Tests under this are not done yet. 
 
             [Test]
             public void test_conncted_phone_false()
@@ -173,7 +167,7 @@ namespace Ladeskab_unit_test
                 _display.Received(1).display("Skabet er låst og din telefon lades. Brug dit RFID tag til at låse op.",
                     1);
             }
-    
+
 
             [Test]
             public void test_LadeSkabsStateLocked_false_id_connected_false_thenAfter_true()
@@ -193,31 +187,31 @@ namespace Ladeskab_unit_test
             [Test]
             public void testCheckID_false()
             {
-                var result = _stationControl.CheckId(30, 35);
+                var result = _uut.CheckId(30, 35);
                 Assert.IsFalse(result);
             }
 
             [Test]
             public void testCheckID_true()
             {
-                var result = _stationControl.CheckId(30, 30);
+                var result = _uut.CheckId(30, 30);
                 Assert.IsTrue(result);
             }
-            
+
             [Test]
             public void testCheckID_true_negative()
             {
-                var result = _stationControl.CheckId(-30, -30);
+                var result = _uut.CheckId(-30, -30);
                 Assert.IsTrue(result);
             }
-            
+
             [Test]
             public void testCheckID_true_false_negative()
             {
-                var result = _stationControl.CheckId(-30, -35);
+                var result = _uut.CheckId(-30, -35);
                 Assert.IsFalse(result);
             }
-            
+
             [Test]
             public void testCloseOpenEventHandler()
             {

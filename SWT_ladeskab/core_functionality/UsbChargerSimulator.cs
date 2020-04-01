@@ -20,7 +20,7 @@ namespace UsbSimulator
 
         private bool _overload;
         private bool _charging;
-        private System.Timers.Timer _timer;
+        private Timer _timer;
         private int _ticksSinceStart;
 
         public UsbChargerSimulator()
@@ -29,7 +29,7 @@ namespace UsbSimulator
             Connected = true;
             _overload = false;
 
-            _timer = new System.Timers.Timer();
+            _timer = new Timer();
             _timer.Enabled = false;
             _timer.Interval = CurrentTickInterval;
             _timer.Elapsed += TimerOnElapsed;
@@ -43,8 +43,9 @@ namespace UsbSimulator
                 _ticksSinceStart++;
                 if (Connected && !_overload)
                 {
-                    double newValue = MaxCurrent - 
-                                      _ticksSinceStart * (MaxCurrent - FullyChargedCurrent) / (ChargeTimeMinutes * 60 * 1000 / CurrentTickInterval);
+                    var newValue = MaxCurrent -
+                                   _ticksSinceStart * (MaxCurrent - FullyChargedCurrent) /
+                                   (ChargeTimeMinutes * 60 * 1000 / CurrentTickInterval);
                     CurrentValue = Math.Max(newValue, FullyChargedCurrent);
                 }
                 else if (Connected && _overload)
@@ -76,17 +77,10 @@ namespace UsbSimulator
             if (!_charging)
             {
                 if (Connected && !_overload)
-                {
                     CurrentValue = 500;
-                }
                 else if (Connected && _overload)
-                {
                     CurrentValue = OverloadCurrent;
-                }
-                else if (!Connected)
-                {
-                    CurrentValue = 0.0;
-                }
+                else if (!Connected) CurrentValue = 0.0;
 
                 OnNewCurrent();
                 _ticksSinceStart = 0;
@@ -109,7 +103,7 @@ namespace UsbSimulator
 
         private void OnNewCurrent()
         {
-            CurrentValueEvent?.Invoke(this, new CurrentEventArgs() {Current = this.CurrentValue});
+            CurrentValueEvent?.Invoke(this, new CurrentEventArgs() { Current = CurrentValue });
         }
     }
 }
