@@ -45,7 +45,7 @@ namespace Ladeskab_unit_test
             [TestCase(true)]
             public void uut_isConnected_test(bool a)
             {
-                _uut.connected = a;
+                _usbCharger.Connected.Returns(a);
                 _uut.startCharge();
                 Assert.That(_uut.isConnected(), Is.EqualTo(a));
             }
@@ -53,7 +53,7 @@ namespace Ladeskab_unit_test
             [Test]
             public void uut_startCharge_and_Connected_Test()
             {
-                _uut.connected = true;
+                _usbCharger.Connected.Returns(true);
                 _uut.startCharge();
                 _usbCharger.Received(1).StartCharge();
             }
@@ -61,7 +61,7 @@ namespace Ladeskab_unit_test
             [Test]
             public void uut_startCharge_and_notConnected_test()
             {
-                _uut.connected = false;
+                _usbCharger.Connected.Returns(false);
                 _uut.startCharge();
                 _usbCharger.Received(1).StopCharge();
             }
@@ -109,6 +109,52 @@ namespace Ladeskab_unit_test
             {
                 _uut.updateDisplayPower(a);
                 Assert.That(_chargeDisplayArgs.msg == "Warning: short circuit, disabling charge mode");
+            }
+
+            [TestCase(501)]
+            [TestCase(550)]
+            [TestCase(750)]
+
+            public void uut_charge_overload_test(double a)
+            {
+                _usbCharger.Connected.Returns(true);
+                _uut.startCharge();
+                _uut.updateDisplayPower(a);
+                _usbCharger.Received(1).StopCharge();
+            }
+
+            [Test]
+            public void uut_charge_not_connected()
+            {
+                _usbCharger.Connected.Returns(true);
+                _uut.startCharge();
+                _uut.updateDisplayPower(0);
+                _usbCharger.Received(1).StopCharge();
+            }
+
+            [TestCase(1)]
+            [TestCase(2)]
+            [TestCase(4)]
+            [TestCase(5)]
+            public void uut_charge_fully_charged(double a)
+            {
+                _usbCharger.Connected.Returns(true);
+                _uut.startCharge();
+                _uut.updateDisplayPower(a);
+                _usbCharger.DidNotReceive().StopCharge();
+            }
+
+            [TestCase(5.1)]
+            [TestCase(50)]
+            [TestCase(100)]
+            [TestCase(300)]
+            [TestCase(500)]
+            public void uut_charge_Charging(double a)
+            {
+                _usbCharger.Connected.Returns(true);
+                _uut.startCharge();
+                _uut.updateDisplayPower(a);
+                _usbCharger.DidNotReceive().StopCharge();
             }
         }
     }

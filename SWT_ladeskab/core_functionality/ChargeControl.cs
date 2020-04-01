@@ -16,7 +16,6 @@ namespace SWT_ladeskab
         {
             Usb = UsbCharger;
             Usb.CurrentValueEvent += ChargeChangedevent;
-            connected = true;
         }
 
         public void updateDisplayPower(double charge)
@@ -27,10 +26,9 @@ namespace SWT_ladeskab
                 chargeState = "";
                 Usb.StopCharge();
             }
-            else if (charge > 0 && charge <= 5)
+            else if (0 < charge && charge <= 5)
             {
                 chargeState = "Phone fully charged.";
-                Usb.StopCharge();
             }
             else if (charge > 5 && charge <= 500)
             {
@@ -48,13 +46,14 @@ namespace SWT_ladeskab
 
         public bool isConnected()
         {
+            connected = Usb.Connected;
             return connected;
         }
 
         //Requests UsbCharger to begin charging.
         public void startCharge()
         {
-            if (connected)
+            if (isConnected())
                 Usb.StartCharge();
             else
                 Usb.StopCharge();
