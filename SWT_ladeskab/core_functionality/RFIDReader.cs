@@ -4,7 +4,6 @@ namespace SWT_ladeskab
 {
     public class RFIDReader : IRFIDReader
     {
-        private IRFIDReader _irfidReaderImplementation;
 
         public event EventHandler<RfidDetectedEventArgs> RfidDetectedEvent;
 

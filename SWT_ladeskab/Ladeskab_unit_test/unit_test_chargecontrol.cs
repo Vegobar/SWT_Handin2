@@ -19,65 +19,64 @@ namespace Ladeskab_unit_test
         [TestFixture]
         private class ChargeConrolTests
         {
-            private IChargeControl _chargeControl;
-            private ChargeControl uut;
+            private ChargeControl _uut;
             private IUsbCharger _usbCharger;
-            private CurrentEventArgs _currentArgs;
             private ChargeDisplayEventArgs _chargeDisplayArgs;
 
             [SetUp]
             public void Setup()
             {
-                _chargeControl = Substitute.For<IChargeControl>();
-                _usbCharger = Substitute.For<UsbChargerSimulator>();
-                uut = Substitute.For<ChargeControl>();
-                _usbCharger.CurrentValueEvent += (o, args) => { _currentArgs = args; };
-                uut.ChargeDisplayEvent += (o, args) => { _chargeDisplayArgs = args; };
+                _chargeDisplayArgs = null;
+
+                _usbCharger = Substitute.For<IUsbCharger>();
+                _uut = new ChargeControl(_usbCharger);
+
+                _uut.ChargeDisplayEvent += (o, args) => { _chargeDisplayArgs = args; };
             }
 
             [Test]
             public void uut_chargeChangedEvent_test()
             {
                 _usbCharger.CurrentValueEvent += Raise.EventWith(new CurrentEventArgs() {Current = 25.0});
-                uut.Received(1).updateDisplayPower(uut.CurrentCharge);
+                Assert.That(_uut.CurrentCharge, Is.EqualTo(25.0));
             }
 
             [TestCase(false)]
             [TestCase(true)]
             public void uut_isConnected_test(bool a)
             {
-                uut.connected = a;
-                uut.startCharge();
-                Assert.That(uut.isConnected(), Is.EqualTo(a));
+                _uut.connected = a;
+                _uut.startCharge();
+                Assert.That(_uut.isConnected(), Is.EqualTo(a));
             }
 
             [Test]
             public void uut_startCharge_and_Connected_Test()
             {
-                uut.connected = true;
-                uut.startCharge();
+                _uut.connected = true;
+                _uut.startCharge();
                 _usbCharger.Received(1).StartCharge();
             }
 
             [Test]
             public void uut_startCharge_and_notConnected_test()
             {
-                uut.connected = false;
-                uut.startCharge();
+                _uut.connected = false;
+                _uut.startCharge();
                 _usbCharger.Received(1).StopCharge();
             }
 
             [Test]
             public void uut_stopCharge_test()
             {
-                uut.stopCharge();
-                _usbCharger.ReceivedCalls();
+                _uut.stopCharge();
+                _usbCharger.Received(1).StopCharge();
             }
 
             [TestCase(0)]
             public void uut_chargeDisplay_NotConnected_test(double a)
             {
-                uut.updateDisplayPower(a);
+                _uut.updateDisplayPower(a);
                 Assert.That(_chargeDisplayArgs.msg == "");
             }
 
@@ -87,7 +86,7 @@ namespace Ladeskab_unit_test
             [TestCase(5)]
             public void uut_chargeDisplay_doneCharging_test(double a)
             {
-                uut.updateDisplayPower(a);
+                _uut.updateDisplayPower(a);
                 Assert.That(_chargeDisplayArgs.msg == "Phone fully charged.");
             }
 
@@ -99,7 +98,7 @@ namespace Ladeskab_unit_test
             [TestCase(500)]
             public void uut_chargeDisplay_isCharging_test(double a)
             {
-                uut.updateDisplayPower(a);
+                _uut.updateDisplayPower(a);
                 Assert.That(_chargeDisplayArgs.msg == "Phone charging.");
             }
 
@@ -108,7 +107,7 @@ namespace Ladeskab_unit_test
             [TestCase(1000)]
             public void uut_chargeDisplay_Overloaded_test(double a)
             {
-                uut.updateDisplayPower(a);
+                _uut.updateDisplayPower(a);
                 Assert.That(_chargeDisplayArgs.msg == "Warning: short circuit, disabling charge mode");
             }
         }

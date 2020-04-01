@@ -5,16 +5,16 @@ namespace SWT_ladeskab
 {
     public class ChargeControl : IChargeControl
     {
-        private IUsbCharger Usb = new UsbChargerSimulator();
-        private IDisplay chargeDisplay = new Display();
+        private IUsbCharger Usb;
 
         public bool connected { get; set; }
         public double CurrentCharge { get; set; }
 
         public event EventHandler<ChargeDisplayEventArgs> ChargeDisplayEvent;
 
-        public ChargeControl()
+        public ChargeControl(IUsbCharger UsbCharger)
         {
+            Usb = UsbCharger;
             Usb.CurrentValueEvent += ChargeChangedevent;
             connected = true;
         }

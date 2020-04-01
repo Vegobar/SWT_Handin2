@@ -13,7 +13,7 @@ internal class Program
         IRFIDReader rfidReader = new RFIDReader();
         IDoor door = new Door();
         IDisplay display = new Display();
-        IChargeControl chargeControl = new ChargeControl();
+        IChargeControl chargeControl = new ChargeControl(new UsbChargerSimulator());
 
         IStationControl stationControl = new StationControl(door, display, rfidReader, chargeControl);
 

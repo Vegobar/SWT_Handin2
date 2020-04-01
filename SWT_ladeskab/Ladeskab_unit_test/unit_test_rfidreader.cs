@@ -20,38 +20,38 @@ namespace Ladeskab_unit_test
         [TestFixture]
         private class RfidTester
         {
-            private IRFIDReader _rfidReader;
-            private RFIDReader uut;
+            private RFIDReader _uut;
             private RfidDetectedEventArgs _receivedRFIDargs;
 
             [SetUp]
             public void Setup()
             {
                 _receivedRFIDargs = null;
-                _rfidReader = Substitute.For<IRFIDReader>();
-                uut = Substitute.For<RFIDReader>();
-                _rfidReader.RfidDetectedEvent += (o, args) => { _receivedRFIDargs = args; };
-                uut.RfidDetectedEvent += (o, args) => { _receivedRFIDargs = args; };
+                _uut = new RFIDReader();
+                _uut.RfidDetectedEvent += (o, args) => { _receivedRFIDargs = args; };
             }
 
             [TestCase(5)]
             [TestCase(2)]
             [TestCase(293673)]
-            [TestCase(-52)]
             public void uut_readerEventargs_test(int a)
             {
-                _rfidReader.RfidDetectedEvent += Raise.EventWith(new RfidDetectedEventArgs() {id = a});
+                _uut.onRfidDetectedEvent(a);
                 Assert.That(_receivedRFIDargs.id, Is.EqualTo(a));
             }
 
             [Test]
             public void uut_onRfid_test()
             {
-                var wasCalled = false;
 
-                _rfidReader.RfidDetectedEvent += (sender, args) => wasCalled = true;
-                _rfidReader.RfidDetectedEvent += Raise.EventWith(new RfidDetectedEventArgs());
-                Assert.That(wasCalled == true);
+                var wasCalled = false;
+                _uut.RfidDetectedEvent += (sender, args) => wasCalled = true;
+                
+                //Rasing an event.
+                _uut.onRfidDetectedEvent(20);
+
+                //Asserting.
+                Assert.True(wasCalled);
             }
 
             [TestCase(25, 25)]
@@ -59,8 +59,8 @@ namespace Ladeskab_unit_test
             [TestCase(1000, 1000)]
             public void uut_onRfidDetectedEvent_test(int a, int expected)
             {
-                uut.onRfidDetectedEvent(a);
-                Assert.That(_receivedRFIDargs.id, Is.EqualTo(a));
+                _uut.onRfidDetectedEvent(a);
+                Assert.That(_receivedRFIDargs.id, Is.EqualTo(expected));
             }
 
             [TestCase(-10)]
@@ -68,7 +68,7 @@ namespace Ladeskab_unit_test
             [TestCase(-100)]
             public void uut_onRfidDetectedEvent_Exception_test(int a)
             {
-                uut.onRfidDetectedEvent(a);
+                _uut.onRfidDetectedEvent(a);
                 Assert.That(_receivedRFIDargs, Is.Null);
             }
 
@@ -76,8 +76,8 @@ namespace Ladeskab_unit_test
             public void uut_onRFIDEvent()
             {
                 var value = 0;
-                uut.RfidDetectedEvent += (sender, args) => value = args.id;
-                uut.onRfidDetectedEvent(25);
+                _uut.RfidDetectedEvent += (sender, args) => value = args.id;
+                _uut.onRfidDetectedEvent(25);
                 Assert.That(value == 25);
             }
         }
